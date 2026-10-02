@@ -5,99 +5,213 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Transform">
-<meta name="theme-color" content="#0f1115">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-512.png">
-<title>90-Day Transformation</title>
+<title>Transform · 90 Days</title>
 <style>
-:root{--bg:#0f1115;--card:#181b22;--card2:#20242d;--line:#2a2f3a;--tx:#e8eaef;--mut:#9aa1ad;--acc:#ff7a1a;--ok:#22c55e;--warn:#f59e0b;--bad:#ef4444}
+:root{color-scheme:light dark;
+ --bg:#f2f2f7;--bg2:#fff;--thumb:#fff;--fill:rgba(118,118,128,.12);--fill2:rgba(118,118,128,.2);
+ --l1:#000;--l2:rgba(60,60,67,.62);--l3:rgba(60,60,67,.3);--sep:rgba(60,60,67,.18);
+ --tint:#f2620f;--tint2:#ff8a3d;--green:#34c759;--red:#ff3b30;
+ --r1:#2a78d6;--r2:#eb6834;--r3:#1baf7a;
+ --bar:rgba(249,249,249,.8);--shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.06);
+ --ease:cubic-bezier(.3,.7,.2,1);--st:env(safe-area-inset-top);--sb:env(safe-area-inset-bottom)}
+@media (prefers-color-scheme:dark){:root{
+ --bg:#000;--bg2:#1c1c1e;--thumb:#636366;--fill:rgba(118,118,128,.24);--fill2:rgba(118,118,128,.36);
+ --l1:#fff;--l2:rgba(235,235,245,.62);--l3:rgba(235,235,245,.3);--sep:rgba(84,84,88,.6);
+ --tint:#ff7a2e;--tint2:#ff9a52;--green:#30d158;--red:#ff453a;
+ --r1:#3987e5;--r2:#d95926;--r3:#199e70;--bar:rgba(22,22,24,.78);--shadow:none}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-header{position:sticky;top:0;z-index:5;background:rgba(15,17,21,.92);backdrop-filter:blur(10px);padding:calc(env(safe-area-inset-top) + 10px) 16px 10px;border-bottom:1px solid var(--line)}
-header h1{margin:0;font-size:18px}
-header .sub{color:var(--mut);font-size:13px}
-main{padding:12px 12px calc(84px + env(safe-area-inset-bottom));max-width:720px;margin:0 auto}
-nav{position:fixed;bottom:0;left:0;right:0;z-index:5;display:flex;background:rgba(20,22,28,.97);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
-nav button{flex:1;background:none;border:0;color:var(--mut);padding:8px 0 7px;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px}
-nav button span{font-size:20px;line-height:1}
-nav button.on{color:var(--acc)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
-.card h2{margin:0 0 8px;font-size:17px}
-.card h3{margin:12px 0 6px;font-size:15px;color:var(--acc)}
-.mut{color:var(--mut)}.sm{font-size:13px}
-.pill{display:inline-block;padding:3px 9px;border-radius:99px;background:var(--card2);border:1px solid var(--line);font-size:12px;margin:2px 4px 2px 0}
-.pill.a{background:var(--acc);border-color:var(--acc);color:#111;font-weight:600}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px}
-.chips button,.seg button{background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:7px 12px;font-size:14px;white-space:nowrap}
-.chips button.on,.seg button.on{background:var(--acc);color:#111;border-color:var(--acc);font-weight:600}
-.seg{display:flex;gap:6px;margin-bottom:10px}.seg button{flex:1}
-ul.ex{list-style:none;margin:0;padding:0}
-ul.ex li{border-top:1px solid var(--line);padding:9px 0}
-ul.ex li:first-child{border-top:0}
-.exr{display:flex;align-items:center;gap:10px}
-.exr label{flex:1;display:flex;gap:10px;align-items:center}
-.exr .nm{flex:1}
-.rx{color:var(--acc);font-weight:600;font-size:13px;text-align:right;max-width:46%}
-input[type=checkbox]{width:22px;height:22px;accent-color:var(--ok);flex:none}
-.ib{background:var(--card2);border:1px solid var(--line);color:var(--mut);border-radius:50%;width:26px;height:26px;font-size:13px;flex:none}
-.cue{display:none;margin:8px 0 0 32px;font-size:13px;color:var(--mut)}
-.cue.show{display:block}
-.cue a{color:var(--acc);text-decoration:none;font-weight:600}
-.blk{margin-top:10px}
-.blk>.bh{font-weight:700;font-size:14px;display:flex;justify-content:space-between;color:var(--tx);margin-bottom:2px}
-.note{background:#2a1f12;border:1px solid #5a3a14;color:#ffd7b0;border-radius:10px;padding:9px 11px;font-size:13px;margin:8px 0}
-.okn{background:#0f2418;border:1px solid #1d5232;color:#b9f5cf;border-radius:10px;padding:9px 11px;font-size:13px;margin:8px 0}
-.big{width:100%;padding:13px;border-radius:12px;border:0;font-size:16px;font-weight:700;background:var(--acc);color:#111;margin-top:10px}
-.big.done{background:var(--ok)}
-.btn{background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:8px 12px;font-size:14px}
-.meal{display:grid;grid-template-columns:62px 1fr;gap:8px;padding:8px 0;border-top:1px solid var(--line)}
-.meal:first-of-type{border-top:0}
-.meal .t{color:var(--acc);font-weight:700;font-size:13px}
-.meal b{display:block;font-size:14px}
-.meal .d{font-size:13.5px;color:#cfd3da}
-table{width:100%;border-collapse:collapse;font-size:13.5px}
-td,th{border-bottom:1px solid var(--line);padding:7px 5px;text-align:left;vertical-align:top}
-th{color:var(--mut);font-weight:600}
-input[type=number],input[type=date],input[type=text],textarea{background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:9px;font-size:16px;width:100%}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
-.cal div{aspect-ratio:1;border-radius:7px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--mut)}
-.cal .d1{background:var(--ok);color:#06210f;font-weight:700}
-.cal .td{outline:2px solid var(--acc)}
-.cal .ms{background:#3a1d1d}
-.bar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden;margin-top:6px}
-.bar i{display:block;height:100%;background:var(--acc)}
-details{border-top:1px solid var(--line);padding:9px 0}
-details:first-of-type{border-top:0}
-summary{font-weight:600;cursor:pointer}
-details p,details li{font-size:13.5px;color:#cfd3da}
-ol,ul.b{padding-left:20px;margin:6px 0}
+html,body{margin:0;background:var(--bg);color:var(--l1)}
+body{font:17px/1.35 -apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Segoe UI",Roboto,sans-serif;letter-spacing:-.012em;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;touch-action:manipulation}
+button{font:inherit;color:inherit;-webkit-user-select:none;user-select:none;cursor:pointer}
+a{color:var(--tint);text-decoration:none}
+
+/* nav bar + large title */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:10;height:calc(var(--st) + 44px);padding-top:var(--st);display:flex;align-items:center;justify-content:center;transition:background .2s,box-shadow .2s}
+.navbar.sc{background:var(--bar);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);box-shadow:0 .5px 0 var(--sep)}
+.navbar .nbt{font-weight:600;font-size:17px;opacity:0;transform:translateY(4px);transition:.2s}
+.navbar.sc .nbt{opacity:1;transform:none}
+main{padding:calc(var(--st) + 44px) 0 calc(100px + var(--sb));max-width:640px;margin:0 auto}
+.lt{padding:0 20px 2px}
+.eb{font-size:13px;font-weight:600;color:var(--l2);text-transform:uppercase;letter-spacing:.02em}
+.lt h1{margin:2px 0 0;font-size:34px;font-weight:700;letter-spacing:.005em;line-height:1.15}
+.view{padding:0 16px}
+.view.in{animation:up .35s var(--ease)}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .hide{display:none}
+
+/* tab bar */
+.tabbar{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;background:var(--bar);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);box-shadow:0 -.5px 0 var(--sep);padding:6px 4px calc(var(--sb) + 4px)}
+.tabbar button{flex:1;background:none;border:0;color:var(--l2);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:500;padding:2px 0;transition:transform .15s}
+.tabbar button:active{transform:scale(.9)}
+.tabbar svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tabbar button.on{color:var(--tint)}
+.tabbar button.on svg{stroke-width:2.3}
+
+/* grouped lists */
+.sh{font-size:13px;color:var(--l2);text-transform:uppercase;letter-spacing:.02em;margin:26px 16px 7px}
+.sf{font-size:13px;color:var(--l2);margin:7px 16px 0;line-height:1.4}
+.list{background:var(--bg2);border-radius:12px;overflow:hidden}
+.cell{display:flex;align-items:center;gap:12px;min-height:50px;padding:10px 16px;position:relative;transition:background .15s}
+.cell+.cell::before{content:"";position:absolute;top:0;right:0;left:var(--in,58px);height:.5px;background:var(--sep)}
+.list.flat .cell+.cell::before{left:16px}
+.cell.tap{cursor:pointer}
+.cell.tap:active{background:var(--fill2)}
+.ct{flex:1;min-width:0}
+.t1{font-size:16px;line-height:1.3}
+.t2{font-size:13.5px;color:var(--l2);margin-top:2px;line-height:1.38}
+.rx{color:var(--tint);font-weight:600}
+.val{font-size:15px;color:var(--l2);text-align:right;white-space:nowrap}
+.chev{width:8px;height:8px;border:solid var(--l3);border-width:2px 2px 0 0;transform:rotate(45deg);flex:none;margin-right:4px}
+.tile{width:30px;height:30px;border-radius:8px;background:var(--fill);display:flex;align-items:center;justify-content:center;font-size:16px;flex:none}
+.num{width:30px;height:30px;border-radius:8px;background:var(--fill);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--l2);flex:none;font-variant-numeric:tabular-nums}
+.chk{width:28px;height:28px;border-radius:50%;border:2px solid var(--l3);background:transparent center/16px no-repeat;flex:none;padding:0;transition:background-color .2s,border-color .2s}
+.chk.on{background-color:var(--green);border-color:var(--green);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7'/%3E%3C/svg%3E");animation:pop .35s var(--ease)}
+@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.cell.dn .t1{color:var(--l2)}
+
+/* cards & figures */
+.card{background:var(--bg2);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.mt{margin-top:14px}
+.hero{display:flex;align-items:center;gap:18px;margin-top:14px}
+.rings{width:132px;height:132px;flex:none}
+.rings circle{fill:none;stroke-width:12}
+.rings .rt{opacity:.2}
+.rings .rf{stroke-linecap:round;transform:rotate(-90deg);transform-box:view-box;transform-origin:50% 50%;transition:stroke-dashoffset 1s var(--ease)}
+.lgd{display:flex;flex-direction:column;gap:10px;min-width:0}
+.lg{display:flex;gap:9px;align-items:flex-start}
+.lg i{width:10px;height:10px;border-radius:50%;margin-top:5px;flex:none}
+.lg .k{font-size:13px;color:var(--l2)}
+.lg .v{font-size:19px;font-weight:600;line-height:1.2}
+.phase{display:flex;align-items:center;gap:8px;margin:12px 4px 0;font-size:14px;color:var(--l2)}
+.badge{background:color-mix(in srgb,var(--tint) 15%,transparent);color:var(--tint);font-weight:600;font-size:12.5px;padding:4px 10px;border-radius:99px;white-space:nowrap}
+.wh h2{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em}
+.wh .f{color:var(--l2);font-size:14.5px;margin-top:2px}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.meta span{background:var(--fill);border-radius:8px;padding:5px 9px;font-size:13px;font-weight:500}
+.pbar{height:6px;border-radius:99px;background:color-mix(in srgb,var(--r2) 20%,transparent);margin-top:14px;overflow:hidden}
+.pbar i{display:block;height:100%;border-radius:99px;background:var(--r2);transition:width .6s var(--ease)}
+.pl{display:flex;justify-content:space-between;font-size:12.5px;color:var(--l2);margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.stat{background:var(--bg2);border-radius:14px;padding:12px;box-shadow:var(--shadow)}
+.stat .k{font-size:12.5px;color:var(--l2)}
+.stat .v{font-size:22px;font-weight:600;margin-top:2px;letter-spacing:-.02em}
+.stat .u{font-size:12px;color:var(--l2)}
+.quote{font-size:15px;line-height:1.5}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chips span{background:var(--fill);border-radius:99px;padding:5px 11px;font-size:13.5px}
+.gh{font-size:13px;font-weight:600;color:var(--l2);margin-top:12px}
+.gh:first-child{margin-top:0}
+.note{background:color-mix(in srgb,var(--tint) 12%,var(--bg2));border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.45;margin-top:12px}
+.empty{color:var(--l2);font-size:14.5px;text-align:center;padding:30px 10px}
+
+/* buttons & controls */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:52px;border:0;border-radius:14px;font-size:17px;font-weight:600;color:#fff;background:linear-gradient(180deg,var(--tint2),var(--tint));margin-top:14px;transition:transform .15s,opacity .15s,background .3s}
+.btn:active{transform:scale(.97);opacity:.88}
+.btn.done{background:var(--green)}
+.btn.tinted{background:color-mix(in srgb,var(--tint) 15%,transparent);color:var(--tint)}
+.btn.gray{background:var(--fill);color:var(--l1)}
+.segc{position:relative;display:grid;grid-template-columns:repeat(var(--n),1fr);background:var(--fill);border-radius:9px;padding:2px;margin-top:14px}
+.segc .thumb{position:absolute;top:2px;bottom:2px;left:2px;width:calc((100% - 4px)/var(--n));border-radius:7px;background:var(--thumb);box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04);transform:translateX(calc(var(--i)*100%));transition:transform .3s var(--ease)}
+.segc button{position:relative;z-index:1;background:none;border:0;font-size:13.5px;font-weight:500;padding:7px 0;border-radius:7px}
+.segc button.on{font-weight:600}
+.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:14px}
+.wk button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0}
+.wk small{font-size:11px;font-weight:600;color:var(--l2)}
+.wk b{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;transition:background .2s,color .2s,transform .15s}
+.wk button:active b{transform:scale(.9)}
+.wk .td b{color:var(--tint)}
+.wk .on b{background:var(--tint);color:#fff}
+details.acc>summary{list-style:none;display:flex;align-items:center;gap:12px;min-height:50px;padding:10px 16px;cursor:pointer;font-size:16px}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary::after{content:"";width:8px;height:8px;border:solid var(--l3);border-width:2px 2px 0 0;transform:rotate(135deg);margin-left:auto;transition:transform .25s}
+details.acc[open]>summary::after{transform:rotate(-45deg)}
+details.acc+details.acc{border-top:.5px solid var(--sep)}
+details.acc .bd{padding:0 16px 14px 58px;font-size:14.5px;color:var(--l2);line-height:1.5}
+details.acc .bd p{margin:0 0 8px}
+details.acc .bd ul{margin:0;padding-left:18px}
+details.acc .bd li{margin-bottom:6px}
+
+/* forms */
+.fm{display:flex;align-items:center;gap:12px;min-height:48px;padding:6px 16px;position:relative}
+.fm+.fm::before{content:"";position:absolute;top:0;right:0;left:16px;height:.5px;background:var(--sep)}
+.fm span{flex:1;font-size:16px}
+.fm input{border:0;background:none;color:var(--l1);font:16px -apple-system,BlinkMacSystemFont,sans-serif;text-align:right;width:55%;outline:0;padding:6px 0}
+.fm input::placeholder{color:var(--l3)}
+.fm textarea{flex:1;border:0;background:none;color:var(--l1);font:16px -apple-system,BlinkMacSystemFont,sans-serif;outline:0;resize:none;padding:8px 0}
+.del{background:var(--fill);border:0;border-radius:50%;width:28px;height:28px;color:var(--l2);font-size:16px;line-height:1;flex:none}
+
+/* calendar */
+.cal{display:grid;grid-template-columns:30px repeat(7,1fr);gap:5px;align-items:center;font-variant-numeric:tabular-nums}
+.cal .wl{font-size:11px;font-weight:600;color:var(--l2)}
+.cal .c{aspect-ratio:1;border-radius:8px;background:var(--fill);display:flex;align-items:center;justify-content:center;font-size:11.5px;color:var(--l2)}
+.cal .ok{background:var(--green);color:#fff;font-weight:700}
+.cal .ms{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+.cal .td{box-shadow:inset 0 0 0 2px var(--tint);color:var(--l1);font-weight:700}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--l2);margin-top:12px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-style:normal}
+
+/* chart */
+.chart{position:relative;margin-top:12px}
+.chart svg{width:100%;height:auto;display:block;touch-action:pan-y;overflow:visible}
+.chart .grid{stroke:var(--sep);stroke-width:1}
+.chart .ax{fill:var(--l2);font-size:10.5px;font-variant-numeric:tabular-nums}
+.chart .ln{fill:none;stroke:var(--r1);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .dot{fill:var(--r1);stroke:var(--bg2);stroke-width:2}
+.chart .el{fill:var(--l1);font-size:12px;font-weight:600}
+.chart .xh{stroke:var(--l3);stroke-width:1;opacity:0}
+.chart .hd{fill:var(--r1);stroke:var(--bg2);stroke-width:2;opacity:0}
+.chart.hov .xh,.chart.hov .hd{opacity:1}
+.chart .tip{position:absolute;pointer-events:none;background:var(--bg2);color:var(--l1);box-shadow:0 4px 16px rgba(0,0,0,.18);border-radius:9px;padding:6px 10px;font-size:13px;white-space:nowrap;transform:translate(-50%,calc(-100% - 12px));opacity:0;transition:opacity .12s}
+.chart.hov .tip{opacity:1}
+.chart .tip b{display:block;font-size:15px}
+
+/* sheet + toast + confetti */
+.sbg{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s}
+.sbg.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;max-width:640px;margin:0 auto;background:var(--bg2);border-radius:16px 16px 0 0;padding:8px 20px calc(var(--sb) + 20px);transform:translateY(105%);transition:transform .4s cubic-bezier(.2,.85,.25,1);max-height:88vh;overflow:auto}
+.sheet.open{transform:none}
+.grab{width:36px;height:5px;border-radius:3px;background:var(--l3);margin:0 auto 18px}
+.sheet h3{margin:0;font-size:24px;font-weight:700;letter-spacing:-.01em}
+.sheet .badge{display:inline-block;margin-top:10px;font-size:14px}
+.sheet .how{font-size:13px;font-weight:600;color:var(--l2);text-transform:uppercase;letter-spacing:.02em;margin-top:20px}
+.sheet p{font-size:16px;line-height:1.5;margin:6px 0 0}
+.toast{position:fixed;left:50%;top:calc(var(--st) + 8px);z-index:30;transform:translate(-50%,-160%);background:var(--bar);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 6px 24px rgba(0,0,0,.18);border-radius:99px;padding:10px 18px;font-size:15px;font-weight:600;transition:transform .4s var(--ease),opacity .3s;white-space:nowrap;opacity:0}
+.toast.show{transform:translate(-50%,0);opacity:1}
+.cf{position:fixed;width:8px;height:12px;border-radius:2px;z-index:40;pointer-events:none;animation:cf 1s cubic-bezier(.2,.6,.3,1) forwards}
+@keyframes cf{to{transform:translate(var(--dx),var(--dy)) rotate(var(--rot));opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header><h1 id="ttl">90-Day Transformation</h1><div class="sub" id="hsub"></div></header>
+<div class="navbar" id="nb"><div class="nbt" id="nbt"></div></div>
 <main>
-  <section id="v-today"></section>
-  <section id="v-train" class="hide"></section>
-  <section id="v-diet" class="hide"></section>
-  <section id="v-posture" class="hide"></section>
-  <section id="v-glow" class="hide"></section>
-  <section id="v-plan" class="hide"></section>
+  <div class="lt"><div class="eb" id="eb"></div><h1 id="lt"></h1></div>
+  <section class="view" id="v-today"></section>
+  <section class="view hide" id="v-train"></section>
+  <section class="view hide" id="v-diet"></section>
+  <section class="view hide" id="v-posture"></section>
+  <section class="view hide" id="v-glow"></section>
+  <section class="view hide" id="v-plan"></section>
 </main>
-<nav id="nav">
-  <button data-v="today" class="on"><span>🏠</span>Today</button>
-  <button data-v="train"><span>🏋️</span>Train</button>
-  <button data-v="diet"><span>🥗</span>Diet</button>
-  <button data-v="posture"><span>🧍</span>Posture</button>
-  <button data-v="glow"><span>✨</span>Glow</button>
-  <button data-v="plan"><span>📈</span>Track</button>
+<nav class="tabbar" id="nav">
+  <button data-v="today" class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg>Today</button>
+  <button data-v="train"><svg viewBox="0 0 24 24"><path d="M6.5 6.5v11M3.5 9v6M17.5 6.5v11M20.5 9v6M6.5 12h11"/></svg>Train</button>
+  <button data-v="diet"><svg viewBox="0 0 24 24"><path d="M5 21c0-9 5-15 15-16-1 10-7 15-16 15"/><path d="M5 21c3-5 6-8 10-11"/></svg>Diet</button>
+  <button data-v="posture"><svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2"/><path d="M12 7.5v7.5M12 15l-3 6M12 15l3 6M6 10.5l6-2 6 2"/></svg>Posture</button>
+  <button data-v="glow"><svg viewBox="0 0 24 24"><path d="M11 3l1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9z"/><path d="M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg>Glow</button>
+  <button data-v="plan"><svg viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="M8 15l3.5-4 3 2.5L20 7"/></svg>Progress</button>
 </nav>
-
+<div class="sbg" id="sbg"></div>
+<div class="sheet" id="sheet"></div>
+<div class="toast" id="toast"></div>
 <script>
 /* ================= EXERCISE LIBRARY ================= */
 const EX={
@@ -292,11 +406,6 @@ const GYM=[SUN,
 SAT];
 
 /* ================= DIET (index 0=Sun … 6=Sat) ================= */
-const WAKE=["6:30","Wake-up drink","1 glass warm water + soaked methi seeds (1 tsp, soaked overnight) OR jeera-ajwain-saunf water. Then 5 soaked almonds + 2 walnuts + 1 tsp roasted flax/pumpkin seeds."];
-const PRE=["7:00","Workout","Best time: before work (7–8 am). Fasted is fine; if weak, ½ banana or black coffee 20 min before."];
-const POST=["8:15","Post-workout","1 scoop whey in water (24g protein) OR 150g hung curd + 1 fruit OR 4 egg whites + 1 fruit."];
-const MID=["11:00","Mid-morning","1 fruit (guava / papaya / apple / orange / pomegranate) + green tea. 1 amla or 20 ml amla juice."];
-const NIGHT=["10:00","Before bed","Haldi doodh: 150 ml toned milk + ½ tsp haldi + pinch kali mirch (no sugar). Optional: 1 tsp Triphala in warm water (digestion). Sleep by 10:45."];
 const D=[
  {n:"Sunday",k:"~1900 kcal · ~125g protein",m:[["8:30","Breakfast","Oats-vegetable upma (40g oats) + 3-egg omelette (1 yolk + 2 whites + 2 whole) with onion/tomato/spinach."],["1:30","Lunch (flex meal P1–P2)","Your controlled 'cheat' — home-style: 2 roti + paneer sabzi + dal + salad, OR one small treat (1 slice pizza / 1 piece mithai). P3: normal lunch."],["4:30","Snack","Fruit + 1 cup buttermilk (chaas) with roasted jeera."],["8:00","Dinner","Moong dal khichdi (1 bowl, more dal than rice) + 1 bowl curd + big salad."]]},
  {n:"Monday",k:"~1950 kcal · ~135g protein",m:[["8:30","Breakfast","3 whole eggs + 2 whites veg omelette + 1 multigrain roti/toast + ½ tsp ghee."],["1:30","Lunch","2 jowar/multigrain roti + 1 katori rajma + 1 katori lauki/tori sabzi + salad + 1 katori raita."],["4:30","Snack","30g roasted chana + 1 glass chaas + green tea."],["8:00","Dinner","Paneer tikka 120g (air-fry/tawa) + sautéed veggies (capsicum, onion, mushroom) + 1 bowl moong dal soup."]]},
@@ -309,7 +418,7 @@ const D=[
 
 /* ================= STATE ================= */
 const DAYS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-const PH=[{n:"Phase 1 · Foundation",d:"Weeks 1–4: learn form, build habits, wake up muscles, fix posture basics."},{n:"Phase 2 · Build",d:"Weeks 5–8: more sets, slower tempo, heavier work, more steps. Body shape visibly changes."},{n:"Phase 3 · Shred",d:"Weeks 9–12: max intensity, density, tighter diet. Abs outline & cuts appear."}];
+const PH=[{n:"Phase 1 · Foundation",s:"Foundation",d:"Weeks 1–4: learn form, build habits, wake up muscles, fix posture basics."},{n:"Phase 2 · Build",s:"Build",d:"Weeks 5–8: more sets, slower tempo, heavier work, more steps. Body shape visibly changes."},{n:"Phase 3 · Shred",s:"Shred",d:"Weeks 9–12: max intensity, density, tighter diet. Abs outline & cuts appear."}];
 const STEPS=["8,000","10,000","12,000"];
 let S=JSON.parse(localStorage.getItem("tx")||"null")||{start:ymd(new Date()),mode:"home",done:{},logs:[]};
 function save(){localStorage.setItem("tx",JSON.stringify(S))}
@@ -317,219 +426,299 @@ function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"
 function pd(s){const[a,b,c]=s.split("-").map(Number);return new Date(a,b-1,c)}
 function dayNum(dt){return Math.floor((pd(ymd(dt))-pd(S.start))/864e5)+1}
 function phaseOf(n){return n<=28?0:n<=56?1:2}
+const clampN=()=>Math.max(1,Math.min(84,dayNum(new Date())));
+const curPh=()=>phaseOf(clampN());
 function getk(d,k){return !!(S.done[d]&&S.done[d][k])}
 function setk(d,k,v){(S.done[d]=S.done[d]||{})[k]=v;save()}
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const yt=n=>"https://www.youtube.com/results?search_query="+encodeURIComponent(n+" proper form");
+const $=id=>document.getElementById(id);
+const fd=d=>pd(d).toLocaleDateString("en-IN",{day:"numeric",month:"short"});
 
-/* ================= RENDER: SESSION ================= */
+/* iOS 18+ haptic tick via the native switch control; vibrate elsewhere */
+function haptic(){
+ if(navigator.vibrate){navigator.vibrate(8);return}
+ const l=document.createElement("label"),i=document.createElement("input");
+ i.type="checkbox";i.setAttribute("switch","");l.appendChild(i);l.style.display="none";document.body.appendChild(l);l.click();l.remove();
+}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),1700)}
+function confetti(el){
+ const r=el.getBoundingClientRect(),cs=getComputedStyle(document.documentElement),cols=["--r1","--r2","--r3","--green"].map(v=>cs.getPropertyValue(v));
+ for(let i=0;i<28;i++){const s=document.createElement("span");s.className="cf";s.style.left=r.left+r.width/2+"px";s.style.top=r.top+"px";s.style.background=cols[i%4];
+  const a=Math.random()*Math.PI-Math.PI,d=80+Math.random()*140;s.style.setProperty("--dx",Math.cos(a)*d+"px");s.style.setProperty("--dy",Math.sin(a)*d+60+"px");s.style.setProperty("--rot",Math.random()*720+"deg");
+  document.body.appendChild(s);setTimeout(()=>s.remove(),1100)}
+}
+function setTitle(t,eb){$("lt").textContent=t;$("nbt").textContent=t;$("eb").textContent=eb||""}
+
+/* ================= UI BUILDERS ================= */
+const seg=(name,opts,i)=>`<div class="segc" data-seg="${name}" style="--n:${opts.length};--i:${i}"><span class="thumb"></span>${opts.map((o,j)=>`<button data-sv="${j}" class="${j===i?"on":""}">${o}</button>`).join("")}</div>`;
+const week=(name,sel)=>{const td=new Date().getDay();return `<div class="wk" data-wk="${name}">${[1,2,3,4,5,6,0].map(i=>`<button data-wv="${i}" class="${i===sel?"on":""} ${i===td?"td":""}"><small>${DAYS[i].toUpperCase()}</small><b>${DAYS[i][0]}</b></button>`).join("")}</div>`};
+const info=(rows,cls="")=>`<div class="list ${cls}">${rows.map(r=>`<div class="cell"><span class="tile">${r[0]}</span><div class="ct"><div class="t1">${r[1]}</div>${r[2]?`<div class="t2">${r[2]}</div>`:""}</div>${r[3]?`<span class="val">${r[3]}</span>`:""}</div>`).join("")}</div>`;
+const steps=rows=>`<div class="list">${rows.map((r,i)=>`<div class="cell"><span class="num">${i+1}</span><div class="ct"><div class="t1">${r[0]}</div>${r[1]?`<div class="t2">${r[1]}</div>`:""}</div></div>`).join("")}</div>`;
+const sh=t=>`<div class="sh">${t}</div>`;
+const sf=t=>`<div class="sf">${t}</div>`;
+
+const RR=[58,44,30];
+function rings(vals){return `<svg class="rings" viewBox="0 0 140 140" aria-hidden="true">${vals.map((x,i)=>{const L=2*Math.PI*RR[i];return `<circle class="rt" cx="70" cy="70" r="${RR[i]}" style="stroke:var(--${x.c})"/><circle class="rf" id="ring${i}" cx="70" cy="70" r="${RR[i]}" data-v="${x.v}" style="stroke:var(--${x.c});stroke-dasharray:${L};stroke-dashoffset:${L}"/>`}).join("")}</svg>`}
+function setRing(i,v){const c=$("ring"+i);if(!c)return;const L=2*Math.PI*RR[i];c.style.strokeDashoffset=L*(1-Math.max(0,Math.min(1,v)))}
+function animRings(){requestAnimationFrame(()=>requestAnimationFrame(()=>{for(let i=0;i<3;i++){const c=$("ring"+i);if(c)setRing(i,+c.dataset.v)}}))}
+
+/* ================= SESSION ================= */
 function session(s,ph,date){
- let h=`<div class="row"><span class="pill a">${s.m} min</span><span class="mut sm">${s.f}</span></div>`;
+ let h="";
  s.b.forEach((b,bi)=>{
-  h+=`<div class="blk"><div class="bh">${esc(b.h)}</div><ul class="ex">`;
+  const[ht,hf]=b.h.split(" — ");
+  h+=sh(esc(ht))+`<div class="list">`;
   b.x.forEach((it,ii)=>{
-   const ex=EX[it.e];const nm=it.n||(ex?ex[0]:it.e);const rx=Array.isArray(it.p)?it.p[ph]:it.p;const k=`w${bi}-${ii}`;
-   h+=`<li><div class="exr">${date?`<label><input type="checkbox" data-d="${date}" data-k="${k}" ${getk(date,k)?"checked":""}><span class="nm">${esc(nm)}</span></label>`:`<span class="nm">${esc(nm)}</span>`}<span class="rx">${esc(rx)}</span>${ex?`<button class="ib" data-cue>i</button>`:""}</div>${ex?`<div class="cue">${esc(ex[1])}<br><a href="${yt(ex[0])}" target="_blank" rel="noopener">▶ Watch demo</a></div>`:""}</li>`;
+   const ex=EX[it.e],nm=it.n||(ex?ex[0]:it.e),rx=Array.isArray(it.p)?it.p[ph]:it.p,k=`w${bi}-${ii}`,on=date&&getk(date,k);
+   h+=`<div class="cell ${ex?"tap":""} ${on?"dn":""}" ${ex?`data-ex="${it.e}" data-rx="${esc(rx)}"`:""}>${date?`<button class="chk ${on?"on":""}" data-d="${date}" data-k="${k}" aria-label="Mark done"></button>`:`<span class="num">${ii+1}</span>`}<div class="ct"><div class="t1">${esc(nm)}</div><div class="t2 rx">${esc(rx)}</div></div>${ex?`<span class="chev"></span>`:""}</div>`;
   });
-  h+=`</ul></div>`;
+  h+=`</div>`+(hf?sf(esc(hf)):"");
  });
  return h;
 }
-function meals(di,ph){
- const d=D[di];
- const order=[WAKE,PRE,POST,d.m[0],MID,d.m[1],d.m[2],d.m[3],NIGHT];
- let h=`<div class="mut sm" style="margin-bottom:6px">${d.k}${ph===2?" · <b style='color:var(--acc)'>P3: skip roti/rice at dinner, max 1 roti at lunch</b>":""}</div>`;
- order.forEach(m=>{h+=`<div class="meal"><div class="t">${m[0]}</div><div><b>${esc(m[1])}</b><span class="d">${esc(m[2])}</span></div></div>`});
- return h;
-}
+const count=s=>s.b.reduce((a,b)=>a+b.x.length,0);
 
 /* ================= HABITS ================= */
 function habits(ph){return [
- ["water","💧 Water 3.5 L (+ 2 cups green tea)"],["steps",`🚶 ${STEPS[ph]} steps (walking pad in meetings)`],["prot","🥚 Protein 120–140 g hit"],["post","🧍 Posture routine 10 min + breaks every 45 min"],
- ["am","☀️ AM skin: cleanse · vit-C/niacinamide · moisturiser · SPF 50"],["pm","🌙 PM skin: cleanse · serum/retinol · moisturiser"],["clean","🚫 No sugar · maida · fried · packaged · alcohol"],
- ["amla","🌿 Amla + morning drink + curry leaves"],["phone","📵 No screens 30 min before bed"],["sleep","😴 Sleep 7–8 h (in bed by 10:45)"]]}
+ ["water","💧","Water 3.5 L","+ 2 cups green tea"],["steps","🚶",`${STEPS[ph]} steps`,"Walking pad during meetings"],["prot","🥚","Protein 120–140 g","Eggs, paneer, dal, curd, soya, whey"],["post","🧍","Posture routine","10 min + a break every 45 min"],
+ ["am","☀️","Morning skincare","Cleanse · vitamin C · moisturiser · SPF 50"],["pm","🌙","Night skincare","Cleanse · serum / retinol · moisturiser"],["clean","🚫","Clean eating","No sugar, maida, fried, packaged, alcohol"],
+ ["amla","🌿","Ayurveda ritual","Morning drink · amla · curry leaves"],["phone","📵","Screens off","30 min before bed"],["sleep","😴","Sleep 7–8 h","In bed by 10:45 pm"]]}
+
+/* ================= MEALS ================= */
+const WAKE=["6:30","Wake-up drink","1 glass warm water + soaked methi seeds (1 tsp) OR jeera-ajwain-saunf water. Then 5 soaked almonds + 2 walnuts + 1 tsp flax/pumpkin seeds."];
+const PRE=["7:00","Workout","Best before work. Fasted is fine; if weak, ½ banana or black coffee 20 min before."];
+const POST=["8:15","Post-workout","1 scoop whey in water (24 g protein) OR 150 g hung curd + 1 fruit OR 4 egg whites + 1 fruit."];
+const MID=["11:00","Mid-morning","1 fruit (guava / papaya / apple / orange / pomegranate) + green tea. 1 amla or 20 ml amla juice."];
+const NIGHT=["10:00","Before bed","Haldi doodh: 150 ml toned milk + ½ tsp haldi + pinch kali mirch, no sugar. Optional 1 tsp Triphala in warm water."];
+function meals(di,ph){
+ const d=D[di],order=[WAKE,PRE,POST,d.m[0],MID,d.m[1],d.m[2],d.m[3],NIGHT];
+ return `<div class="list">${order.map(m=>`<div class="cell" style="--in:76px;align-items:flex-start"><span class="num" style="width:48px;font-size:12.5px;color:var(--tint)">${m[0]}</span><div class="ct"><div class="t1" style="font-weight:600">${esc(m[1])}</div><div class="t2">${esc(m[2])}</div></div></div>`).join("")}</div>`+sf(d.k+(ph===2?" · Phase 3: no roti/rice at dinner, max 1 roti at lunch.":""));
+}
 
 /* ================= TODAY ================= */
+function todayStats(){
+ const now=new Date(),t=ymd(now),plan=(S.mode==="gym"?GYM:HOME)[now.getDay()];let tot=0,dn=0;
+ plan.b.forEach((b,bi)=>b.x.forEach((_,ii)=>{tot++;if(getk(t,`w${bi}-${ii}`))dn++}));
+ const hb=habits(curPh()),hd=hb.filter(x=>getk(t,"h-"+x[0])).length,W=getk(t,"W"),n=dayNum(now);
+ return {t,tot,dn,W,hb:hb.length,hd,n,wp:W?1:dn/tot,hp:hd/hb.length,pp:Math.max(0,Math.min(1,n/84))};
+}
 function renderToday(){
- const now=new Date(),t=ymd(now),n=dayNum(now),ph=phaseOf(Math.max(1,Math.min(84,n))),dow=now.getDay();
- const plan=(S.mode==="gym"?GYM:HOME)[dow];
- let head;
- if(n<1)head=`Starts in ${1-n} day(s) — preview of ${PH[0].n}`;else if(n>84)head=`🏆 Program complete! Day ${n} · keep going with Phase 3`;else head=`Day ${n} / 84 · Week ${Math.ceil(n/7)} · ${PH[ph].n}`;
- document.getElementById("hsub").textContent=head;
- const hb=habits(ph);const hd=hb.filter(x=>getk(t,"h-"+x[0])).length;
- let h=`<div class="card"><div class="seg"><button data-mode="home" class="${S.mode==="home"?"on":""}">🏠 Home</button><button data-mode="gym" class="${S.mode==="gym"?"on":""}">🏋️ Gym</button></div>
- <h2>${DAYS[dow]}: ${plan.t}</h2>${session(plan,ph,t)}
- <button class="big ${getk(t,"W")?"done":""}" data-wd="${t}">${getk(t,"W")?"✅ Workout done — great job!":"Mark workout complete"}</button></div>`;
- h+=`<div class="card"><h2>Daily habits <span class="mut sm">${hd}/${hb.length}</span></h2><div class="bar"><i style="width:${hd/hb.length*100}%"></i></div><ul class="ex" style="margin-top:6px">`;
- hb.forEach(x=>{h+=`<li><div class="exr"><label><input type="checkbox" data-d="${t}" data-k="h-${x[0]}" ${getk(t,"h-"+x[0])?"checked":""}><span class="nm">${x[1]}</span></label></div></li>`});
- h+=`</ul></div><div class="card"><h2>Today's meals</h2>${meals(dow,ph)}</div>`;
- h+=`<div class="card"><h2>${PH[ph].n}</h2><p class="mut sm" style="margin:0">${PH[ph].d}</p></div>`;
- document.getElementById("v-today").innerHTML=h;
+ const now=new Date(),ph=curPh(),plan=(S.mode==="gym"?GYM:HOME)[now.getDay()],st=todayStats(),n=st.n;
+ setTitle("Today",now.toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"}));
+ const sub=n<1?`Starts in ${1-n} day${1-n>1?"s":""}`:n>84?"Program complete 🏆":`Day ${n} · Week ${Math.ceil(n/7)}`;
+ let h=`<div class="card hero">${rings([{c:"r2",v:st.wp},{c:"r3",v:st.hp},{c:"r1",v:st.pp}])}
+  <div class="lgd"><div class="lg"><i style="background:var(--r2)"></i><div><div class="k">Workout</div><div class="v" id="sv0">${st.W?"Done":st.dn+"/"+st.tot}</div></div></div>
+  <div class="lg"><i style="background:var(--r3)"></i><div><div class="k">Habits</div><div class="v" id="sv1">${st.hd}/${st.hb}</div></div></div>
+  <div class="lg"><i style="background:var(--r1)"></i><div><div class="k">Program</div><div class="v">${Math.max(0,Math.min(84,n))}/84</div></div></div></div></div>
+  <div class="phase"><span class="badge">${PH[ph].s}</span>${sub}</div>`;
+ h+=seg("mode",["Home","Gym"],S.mode==="gym"?1:0);
+ h+=`<div class="card wh mt"><h2>${plan.t}</h2><div class="f">${plan.f}</div><div class="meta"><span>⏱ ${plan.m} min</span><span>${count(plan)} exercises</span><span>${PH[ph].s}</span></div>
+  <div class="pbar"><i id="wbar" style="width:${st.dn/st.tot*100}%"></i></div><div class="pl"><span id="wcnt">${st.dn} of ${st.tot} done</span><span>Tap an exercise for form tips</span></div></div>`;
+ h+=session(plan,ph,st.t);
+ h+=`<button class="btn ${st.W?"done":""}" id="wdone">${st.W?"✓ Workout complete":"Complete workout"}</button>`;
+ h+=sh("Daily habits")+`<div class="list">${habits(ph).map(x=>{const on=getk(st.t,"h-"+x[0]);return `<div class="cell ${on?"dn":""}"><span class="tile">${x[1]}</span><div class="ct"><div class="t1">${x[2]}</div><div class="t2">${x[3]}</div></div><button class="chk ${on?"on":""}" data-d="${st.t}" data-k="h-${x[0]}" aria-label="Done"></button></div>`}).join("")}</div>`;
+ h+=sh("Today's meals")+meals(now.getDay(),ph);
+ h+=sh("This phase")+`<div class="card"><div class="quote">${PH[ph].d}</div></div>`;
+ $("v-today").innerHTML=h;animRings();
+}
+function refreshToday(){
+ const st=todayStats();setRing(0,st.wp);setRing(1,st.hp);
+ $("sv0").textContent=st.W?"Done":st.dn+"/"+st.tot;$("sv1").textContent=st.hd+"/"+st.hb;
+ $("wbar").style.width=st.dn/st.tot*100+"%";$("wcnt").textContent=`${st.dn} of ${st.tot} done`;
 }
 
 /* ================= TRAIN ================= */
 let tr={mode:null,dow:null,ph:null};
 function renderTrain(){
- const n=dayNum(new Date());
- if(tr.mode===null)tr.mode=S.mode;if(tr.dow===null)tr.dow=new Date().getDay();if(tr.ph===null)tr.ph=phaseOf(Math.max(1,Math.min(84,n)));
- const plan=(tr.mode==="gym"?GYM:HOME);
- let h=`<div class="card"><div class="seg"><button data-tm="home" class="${tr.mode==="home"?"on":""}">🏠 Home</button><button data-tm="gym" class="${tr.mode==="gym"?"on":""}">🏋️ Gym</button></div>
- <div class="seg">${[0,1,2].map(i=>`<button data-tp="${i}" class="${tr.ph===i?"on":""}">P${i+1}</button>`).join("")}</div>
- <div class="chips">${[1,2,3,4,5,6,0].map(i=>`<button data-td="${i}" class="${tr.dow===i?"on":""}">${DAYS[i]}</button>`).join("")}</div>
- <h2>${DAYS[tr.dow]}: ${plan[tr.dow].t}</h2>${session(plan[tr.dow],tr.ph,null)}</div>`;
- h+=`<div class="card"><h2>Weekly split</h2><table><tr><th>Day</th><th>Home</th><th>Gym</th></tr>${[1,2,3,4,5,6,0].map(i=>`<tr><td>${DAYS[i]}</td><td>${HOME[i].t}</td><td>${GYM[i].t}</td></tr>`).join("")}</table></div>`;
- h+=`<div class="card"><h2>Training rules</h2><ul class="b sm">
- <li><b>Progressive overload</b> is everything. With 8 kg weights you progress by: more reps → slower tempo (3s down) → pauses → 1½ reps → less rest → unilateral (one arm/leg). Write numbers down.</li>
- <li>Last 2 reps of every set should be <b>hard</b> but with good form. If it's easy, it doesn't change your body.</li>
- <li>Plan to buy <b>adjustable dumbbells (2–24 kg) or a 12–16 kg kettlebell around week 5</b> — your legs and back will outgrow 8 kg.</li>
- <li>A <b>doorway pull-up bar</b> (₹800–1500) is the single best home upgrade for a V-shaped back.</li>
- <li>Rest 45–60s at home, 60–90s in gym. Breathe out on the effort.</li>
- <li>Pain in a joint (not muscle burn) = stop that exercise, swap it.</li>
- <li>Week 4 and week 8: do the same workouts with ~30% fewer sets if you feel beaten up (deload).</li>
- <li>Gym days: Saturday yoga/walk can be done at home. If gym is new to you, book 2–3 sessions with a trainer to learn squat, deadlift and bench form.</li></ul></div>`;
- document.getElementById("v-train").innerHTML=h;
+ if(tr.mode===null)tr.mode=S.mode;if(tr.dow===null)tr.dow=new Date().getDay();if(tr.ph===null)tr.ph=curPh();
+ const P=tr.mode==="gym"?GYM:HOME,s=P[tr.dow];
+ setTitle("Train",tr.mode==="gym"?"Gym program":"Home program · 2×8 kg DB, 8 kg KB, bands");
+ let h=seg("tm",["Home","Gym"],tr.mode==="gym"?1:0)+seg("tp",["Phase 1","Phase 2","Phase 3"],tr.ph)+week("td",tr.dow);
+ h+=`<div class="card wh mt"><h2>${s.t}</h2><div class="f">${s.f}</div><div class="meta"><span>⏱ ${s.m} min</span><span>${count(s)} exercises</span><span>${PH[tr.ph].s}</span></div></div>`;
+ h+=session(s,tr.ph,null);
+ h+=sh("Weekly split")+`<div class="list">${[1,2,3,4,5,6,0].map(i=>`<div class="cell tap" data-goday="${i}"><span class="num">${DAYS[i]}</span><div class="ct"><div class="t1">${P[i].t}</div><div class="t2">${P[i].f}</div></div><span class="chev"></span></div>`).join("")}</div>`;
+ h+=sh("Training rules")+info([
+  ["📈","Progressive overload","With 8 kg you progress by: more reps → 3s lowering → pauses → 1½ reps → less rest → one arm/leg at a time. Write numbers down."],
+  ["🔥","Train hard","The last 2 reps of every set should be hard with good form. Easy sets don't change your body."],
+  ["🛒","Upgrade around week 5","Adjustable dumbbells (2–24 kg) or a 12–16 kg kettlebell — legs and back will outgrow 8 kg."],
+  ["🚪","Doorway pull-up bar","₹800–1,500. The single best home upgrade for a V-shaped back."],
+  ["⏱️","Rest","45–60s at home, 60–90s in the gym. Breathe out on the effort."],
+  ["⚠️","Joint pain = stop","Muscle burn is fine, joint pain is not. Swap the exercise."],
+  ["🔄","Deload","Weeks 4 and 8: cut ~30% of sets if you feel beaten up."],
+  ["🧑‍🏫","New to the gym?","Book 2–3 trainer sessions to learn squat, deadlift and bench. Saturday yoga & walk can be done at home."]]);
+ $("v-train").innerHTML=h;
 }
 
 /* ================= DIET ================= */
 let dd=null;
 function renderDiet(){
- const ph=phaseOf(Math.max(1,Math.min(84,dayNum(new Date()))));if(dd===null)dd=new Date().getDay();
- let h=`<div class="card"><h2>Your numbers</h2><table>
- <tr><td>Maintenance (est.)</td><td><b>~2,500 kcal</b></td></tr>
- <tr><td>Target</td><td><b>P1 1,950 · P2 1,900 · P3 1,800 kcal</b></td></tr>
- <tr><td>Protein</td><td><b>120–140 g/day</b> (main driver of muscle + fat loss)</td></tr>
- <tr><td>Fat</td><td>50–60 g (ghee/oil max 3 tsp/day total)</td></tr>
- <tr><td>Fibre</td><td>30 g+ (veggies at every meal)</td></tr>
- <tr><td>Water</td><td>3.5 L</td></tr>
- <tr><td>Expected loss</td><td>0.5–0.9 kg/week</td></tr></table>
- <div class="okn">Plate rule (lunch & dinner): ½ plate sabzi/salad · ¼ protein (paneer/dal/egg/tofu/soya) · ¼ roti/rice.</div></div>`;
- h+=`<div class="card"><div class="chips">${[1,2,3,4,5,6,0].map(i=>`<button data-dd="${i}" class="${dd===i?"on":""}">${DAYS[i]}</button>`).join("")}</div><h2>${D[dd].n}</h2>${meals(dd,ph)}
- <div class="note">Evening workout? Move the post-workout shake to after the session (~7:30 pm) and have the 4:30 snack as pre-workout.</div></div>`;
- h+=`<div class="card"><h2>Protein cheat sheet</h2><table><tr><th>Food</th><th>Protein</th></tr>
- <tr><td>1 whole egg / 1 egg white</td><td>6 g / 3.5 g</td></tr><tr><td>Paneer 100 g (prefer low-fat)</td><td>18–20 g</td></tr><tr><td>Tofu 100 g</td><td>12–15 g</td></tr>
- <tr><td>Soya chunks 30 g dry</td><td>15 g</td></tr><tr><td>Hung curd / Greek yogurt 200 g</td><td>18–20 g</td></tr><tr><td>Whey 1 scoop</td><td>24 g</td></tr>
- <tr><td>Dal 1 katori cooked</td><td>7–9 g</td></tr><tr><td>Rajma/chole 1 katori</td><td>8–10 g</td></tr><tr><td>Sprouts 1 bowl</td><td>10–12 g</td></tr>
- <tr><td>Roasted chana 30 g</td><td>6 g</td></tr><tr><td>Milk 250 ml</td><td>8 g</td></tr><tr><td>Besan chilla (1)</td><td>6 g</td></tr></table></div>`;
- h+=`<div class="card"><h2>Rules</h2><ul class="b sm">
- <li><b>Stop:</b> sugar in tea, biscuits, namkeen, bhujia, maida (bread, naan, pizza base), fried (samosa, pakora, puri), cold drinks, packaged juice, alcohol.</li>
- <li>Tea/coffee: max 2/day, no sugar (use stevia if needed).</li>
- <li>Dinner by 8 pm, 2–3 h before bed. Walk 10 min after lunch & dinner (walking pad!).</li>
- <li>Cook in mustard oil / ghee, measured with a teaspoon. Air-fryer is your friend.</li>
- <li>Outside food: choose tandoori paneer/soya tikka, dal, salad, roti (not naan). Skip gravies with cream.</li>
- <li>Sundays P1–P2: 1 controlled flex meal. P3: none.</li>
- <li>Weigh food for the first 2 weeks (₹300 kitchen scale) — you'll learn portions for life.</li></ul></div>`;
- h+=`<div class="card"><h2>Supplements <span class="mut sm">(ask your doctor first)</span></h2><ul class="b sm">
- <li><b>Whey protein</b> (isolate if lactose-sensitive) — 1 scoop/day. Makes vegetarian protein targets easy. Buy a lab-tested brand.</li>
- <li><b>Creatine monohydrate</b> 3–5 g daily, any time. Most-researched supplement: strength, muscle fullness.</li>
- <li><b>Vitamin D3</b> & <b>B12</b> — most Indian vegetarians are deficient; both affect energy, mood, hair and greying. Dose per blood test.</li>
- <li><b>Omega-3</b> (fish oil or algae oil) — skin, joints, heart.</li>
- <li><b>Magnesium glycinate</b> at night — sleep quality.</li>
- <li>Optional Ayurveda: <b>Ashwagandha</b> (KSM-66) 300–600 mg — stress, sleep; avoid with thyroid conditions unless your doctor approves.</li></ul></div>`;
- h+=`<div class="card"><h2>Weekly grocery list</h2><p class="sm">Eggs 30 · paneer (low-fat) 700 g · tofu 400 g · soya chunks 250 g · curd 3–4 kg (make hung curd) · toned milk 1.5 L · moong/masoor/arhar dal · rajma · kabuli/kala chana · moong for sprouts · oats · dalia/quinoa · brown rice · jowar/bajra/multigrain atta · besan · makhana · roasted chana · almonds · walnuts · flax/pumpkin/chia seeds · amla · seasonal fruits (guava, papaya, apple, orange, pomegranate) · spinach, methi, lauki, tori, bhindi, beans, capsicum, broccoli, mushroom, cucumber, tomato, onion, carrot, beetroot · curry leaves · ginger · garlic · lemon · green tea · haldi · jeera · ajwain · saunf · methi seeds · cinnamon.</p></div>`;
- document.getElementById("v-diet").innerHTML=h;
+ const ph=curPh();if(dd===null)dd=new Date().getDay();
+ setTitle("Diet","Indian vegetarian + eggs");
+ let h=`<div class="stats"><div class="stat"><div class="k">Calories</div><div class="v">${["1,950","1,900","1,800"][ph]}</div><div class="u">kcal / day</div></div><div class="stat"><div class="k">Protein</div><div class="v">130</div><div class="u">g / day</div></div><div class="stat"><div class="k">Water</div><div class="v">3.5</div><div class="u">litres / day</div></div></div>`;
+ h+=week("dd",dd)+sh(D[dd].n)+meals(dd,ph);
+ h+=`<div class="note">🏃 Evening workout? Have the 4:30 snack as pre-workout and move the post-workout shake to ~7:30 pm.</div>`;
+ h+=sh("Your numbers")+info([["🔥","Maintenance","Estimated daily burn","~2,500 kcal"],["🎯","Phase targets","1,950 → 1,900 → 1,800 kcal",""],["🥑","Fat","Ghee / oil max 3 tsp total","50–60 g"],["🥦","Fibre","Veggies at every meal","30 g+"],["📉","Expected loss","Healthy, keeps muscle","0.5–0.9 kg/wk"],["🍽️","Plate rule","½ sabzi / salad · ¼ protein · ¼ roti or rice",""]]);
+ h+=sh("Protein cheat sheet")+`<div class="list flat">${[["1 whole egg / 1 egg white","6 g / 3.5 g"],["Paneer 100 g (low-fat)","18–20 g"],["Tofu 100 g","12–15 g"],["Soya chunks 30 g dry","15 g"],["Hung curd / Greek yogurt 200 g","18–20 g"],["Whey, 1 scoop","24 g"],["Dal, 1 katori","7–9 g"],["Rajma / chole, 1 katori","8–10 g"],["Sprouts, 1 bowl","10–12 g"],["Roasted chana 30 g","6 g"],["Milk 250 ml","8 g"],["Besan chilla, 1","6 g"]].map(r=>`<div class="cell"><div class="ct"><div class="t1">${r[0]}</div></div><span class="val">${r[1]}</span></div>`).join("")}</div>`;
+ h+=sh("Rules")+info([
+  ["🚫","Stop","Sugar in tea, biscuits, namkeen, maida (bread, naan, pizza), fried food, cold drinks, packaged juice, alcohol."],
+  ["☕","Tea & coffee","Max 2 a day, no sugar (stevia if needed)."],
+  ["🌙","Dinner by 8 pm","2–3 h before bed. Walk 10 min after lunch and dinner."],
+  ["🥄","Measure oil","Mustard oil / ghee by the teaspoon. Air-fryer is your friend."],
+  ["🍢","Eating out","Tandoori paneer / soya tikka, dal, salad, roti (not naan). Skip cream gravies."],
+  ["🎉","Flex meal","Sunday lunch in Phases 1–2 only."],
+  ["⚖️","Weigh food for 2 weeks","A ₹300 kitchen scale teaches you portions for life."]]);
+ h+=sh("Supplements")+info([
+  ["🥛","Whey protein","1 scoop a day. Makes vegetarian protein easy. Lab-tested brand; isolate if lactose-sensitive."],
+  ["⚡","Creatine monohydrate","3–5 g daily, any time. Strength and muscle fullness."],
+  ["☀️","Vitamin D3 & B12","Most Indian vegetarians are low. Affects energy, hair and greying. Dose per blood test."],
+  ["🐟","Omega-3","Fish or algae oil. Skin, joints, heart."],
+  ["🌙","Magnesium glycinate","At night, for sleep quality."],
+  ["🌿","Ashwagandha (optional)","KSM-66, 300–600 mg. Stress and sleep. Avoid with thyroid issues unless your doctor approves."]])+sf("Check with your doctor before starting supplements.");
+ const G=[["Protein","Eggs ×30, Low-fat paneer 700 g, Tofu 400 g, Soya chunks 250 g, Curd 3–4 kg, Toned milk 1.5 L, Whey"],["Dals & grains","Moong, Masoor, Arhar, Rajma, Kabuli chana, Kala chana, Sprouting moong, Oats, Dalia / quinoa, Brown rice, Jowar / bajra atta, Besan"],["Nuts & seeds","Almonds, Walnuts, Flax, Pumpkin, Chia, Makhana, Roasted chana"],["Veg & fruit","Spinach, Methi, Lauki, Tori, Bhindi, Beans, Capsicum, Broccoli, Mushroom, Cucumber, Tomato, Onion, Carrot, Beetroot, Amla, Guava, Papaya, Apple, Orange, Pomegranate, Lemon"],["Kitchen","Curry leaves, Ginger, Garlic, Haldi, Jeera, Ajwain, Saunf, Methi seeds, Cinnamon, Green tea"]];
+ h+=sh("Weekly grocery list")+`<div class="card">${G.map(g=>`<div class="gh">${g[0]}</div><div class="chips">${g[1].split(", ").map(x=>`<span>${x}</span>`).join("")}</div>`).join("")}</div>`;
+ $("v-diet").innerHTML=h;
 }
 
 /* ================= POSTURE ================= */
 function renderPosture(){
- const P={t:"Daily Posture Fix (10–12 min)",f:"Rounded shoulders · Forward head · Tight hips · Weak glutes",m:12,b:[
-  {h:"Release",x:[e("thor","2 min (3 spots)"),e("pecst","45s/side"),e("hipflex","45s/side")]},
-  {h:"Activate",x:[e("chin","2×10 · 3s hold"),e("wangel","2×10"),e("pullap","2×20"),e("ytw","1×8 each"),e("glbr","2×15"),e("dbug","2×8/side")]},
-  {h:"Lock it in",x:[e("wallchk","60s")]}]};
- const t=ymd(new Date());
- let h=`<div class="card"><h2>${P.t}</h2>${session(P,0,null)}<div class="okn">Do this every day — morning or after work. Tick "Posture routine" in Today's habits.</div></div>`;
- h+=`<div class="card"><h2>Work-from-home setup (most important)</h2><ul class="b sm">
- <li><b>Screen top at eye level</b>, arm's length away. Laptop? Use a stand + external keyboard & mouse (₹1,500 total). This alone fixes half your neck problem.</li>
- <li>Chair: feet flat, knees ~90°, lower back supported (rolled towel), elbows at 90° by your sides.</li>
- <li><b>Phone at eye level</b> — lift the phone, don't drop the head. Every inch forward adds ~4–5 kg load on the neck.</li>
- <li><b>45/5 rule:</b> every 45 min stand 5 min: 10 chin tucks, 10 shoulder-blade squeezes, 10 bodyweight squats, door chest stretch.</li>
- <li>Take calls standing or on the walking pad (2.5–3.5 km/h). Aim 4,000–6,000 steps during work hours.</li>
- <li>Set an hourly reminder on iPhone (Clock → Alarm, or Reminders "every hour 10–6").</li></ul></div>`;
- h+=`<div class="card"><h2>Sleep posture</h2><ul class="b sm"><li>Sleep on back or side; avoid stomach sleeping (twists the neck).</li><li>Pillow height so the neck stays level with the spine. Side sleepers: pillow between knees.</li></ul></div>
- <div class="card"><h2>Standing cues (all day)</h2><p class="sm">"Tall crown, chin back, ribs down, shoulders back & down (not forced), glutes lightly on, weight mid-foot." Check yourself in every mirror you pass.</p>
- <p class="sm mut">Result timeline: you'll feel straighter in 2 weeks; visible change in photos by week 6–8, if you also fix the desk setup.</p></div>`;
- document.getElementById("v-posture").innerHTML=h;
+ const t=ymd(new Date()),on=getk(t,"h-post");
+ const P={t:"",f:"",m:12,b:[
+  {h:"Release · 4 min",x:[e("thor","2 min · 3 spots"),e("pecst","45s / side"),e("hipflex","45s / side")]},
+  {h:"Activate · 7 min",x:[e("chin","2×10 · 3s hold"),e("wangel","2×10"),e("pullap","2×20"),e("ytw","1×8 each"),e("glbr","2×15"),e("dbug","2×8 / side")]},
+  {h:"Lock it in · 1 min",x:[e("wallchk","60s")]}]};
+ setTitle("Posture","Rounded shoulders · forward head · tight hips");
+ let h=`<div class="card mt wh"><h2>Daily posture fix</h2><div class="f">12 minutes, every day — morning or after work.</div><div class="meta"><span>⏱ 12 min</span><span>10 exercises</span><span>No equipment but a band</span></div></div>`;
+ h+=session(P,0,null);
+ h+=`<button class="btn ${on?"done":""}" id="pdone">${on?"✓ Done for today":"Mark done for today"}</button>`;
+ h+=sh("Work-from-home setup")+info([
+  ["🖥️","Screen at eye level","Arm's length away. Laptop: stand + external keyboard & mouse (~₹1,500). Fixes half the neck problem."],
+  ["🪑","Chair","Feet flat, knees ~90°, rolled towel behind lower back, elbows at 90°."],
+  ["📱","Phone at eye level","Lift the phone, don't drop the head. Each inch forward adds ~4–5 kg of load on the neck."],
+  ["⏰","45 / 5 rule","Every 45 min stand for 5: 10 chin tucks, 10 shoulder-blade squeezes, 10 squats, door chest stretch."],
+  ["🚶","Walk your calls","Walking pad at 2.5–3.5 km/h in meetings. Aim for 4,000–6,000 steps during work."],
+  ["🔔","Reminder","iPhone Reminders → repeat hourly, 10 am–6 pm: “Posture break”."]]);
+ h+=sh("Sleep")+info([["🛏️","Back or side","Avoid sleeping on your stomach — it twists the neck."],["🧸","Pillow height","Neck level with spine. Side sleepers: pillow between the knees."]]);
+ h+=sh("All-day cue")+`<div class="card"><div class="quote">“Tall crown, chin back, ribs down, shoulders back & down, glutes lightly on, weight mid-foot.”</div></div>`+sf("You'll feel straighter in 2 weeks; it shows in photos by week 6–8 if you also fix the desk setup.");
+ $("v-posture").innerHTML=h;
 }
 
-/* ================= GLOW: SKIN / HAIR / AYURVEDA ================= */
+/* ================= GLOW ================= */
 function renderGlow(){
- document.getElementById("v-glow").innerHTML=`
- <div class="card"><h2>Face glow — daily routine</h2>
- <h3>☀️ Morning (3 min)</h3><ol class="sm"><li>Gentle face wash (e.g. Cetaphil / Simple / Minimalist).</li><li><b>Vitamin C serum</b> (10–15%) or <b>Niacinamide 10%</b> — dullness, dark spots, oil control.</li><li>Light gel moisturiser.</li><li><b>Sunscreen SPF 50 PA+++</b> — EVERY day, even WFH (window UV). #1 anti-ageing step. Reapply if you go out.</li></ol>
- <h3>🌙 Night (3 min)</h3><ol class="sm"><li>Wash face (twice if you wore sunscreen outside).</li><li>Weeks 1–2: niacinamide. <b>From week 3: Retinol 0.25–0.3%</b> (pea-size) 2 nights/week → 3 → every other night. Reduces fine lines, pores, dullness. Never with vit-C/AHA same night.</li><li>Moisturiser (ceramide-based). Lip balm.</li></ol>
- <h3>🗓️ Weekly</h3><ul class="b sm"><li>1× <b>salicylic acid (BHA)</b> face wash/exfoliant — clears pores, pollution grime.</li><li>1× <b>ubtan</b>: 2 tsp besan + pinch haldi + 1 tsp curd + few drops honey/rose water. 10 min, wash off. Brightens.</li><li>Fresh aloe vera gel at night on non-retinol nights — soothing.</li></ul>
- <div class="note">Patch-test new products on the jaw for 2 days. Persistent pigmentation, acne or dark circles → dermatologist.</div></div>
-
- <div class="card"><h2>Glow from inside</h2><ul class="b sm"><li><b>Sleep 7–8 h</b> — dull skin & dark circles are mostly sleep + screen time.</li><li><b>3.5 L water</b>, 5 colours of veggies/fruit daily (beetroot, carrot, spinach, tomato, papaya).</li><li>Cut sugar → less glycation (sugar ages skin) and less inflammation.</li><li>Amla, guava, orange = vitamin C for collagen. Walnuts, flax = omega-3.</li><li>Sweat 6 days/week → better circulation and that 'athlete' flush.</li></ul></div>
-
- <div class="card"><h2>Hair (thinning) & beard (white)</h2>
- <details open><summary>Honest truth first</summary><p>Grey/white hair is mostly <b>genetic</b>; it usually can't be reversed. But deficiencies (B12, vitamin D, iron/ferritin, copper, thyroid) and stress can speed it up — fixing them can slow it, and occasionally a few hairs re-pigment. Thinning hair in men is usually androgenic and <b>progressive</b> — start early to keep what you have.</p></details>
- <details><summary>Medical options (most effective)</summary><ul class="b"><li>See a <b>dermatologist</b> about <b>Minoxidil 5%</b> and/or oral options — these are the evidence-based treatments for thinning.</li><li><b>Ketoconazole 2% shampoo</b> 2×/week if dandruff/itchy scalp.</li><li>Get blood tests (see Track tab) — correct B12, D3, ferritin, thyroid.</li></ul></details>
- <details><summary>Ayurveda / home care</summary><ul class="b"><li>Oil massage 2×/week, 1 h before wash: coconut oil heated with <b>curry leaves + methi seeds</b>, or <b>bhringraj / amla oil</b>. 5 min scalp massage boosts circulation.</li><li>Daily: 1 amla (or 20 ml juice) + 8–10 curry leaves (chew or in food).</li><li>Shampoo with lukewarm (not hot) water. Avoid tight caps and harsh styling.</li><li>Protein 120 g+/day — hair is made of protein.</li></ul></details>
- <details><summary>Beard styling for a younger look</summary><ul class="b"><li><b>Option A — own it:</b> a short, sharply shaped salt-and-pepper beard (3–6 mm, clean cheek & neck line) looks premium and mature-fit. Get it shaped by a good barber every 2–3 weeks.</li><li><b>Option B — colour:</b> ammonia-free beard colour, or natural henna + indigo (2-step) for darker tone. Patch test first.</li><li>Beard oil daily, trim weekly. A visible jawline (from fat loss) makes the biggest age difference.</li></ul></details></div>
-
- <div class="card"><h2>Ayurveda daily ritual (Dinacharya)</h2><table>
- <tr><td><b>Wake</b></td><td>Tongue scraping, oil pulling 5 min (1 tbsp coconut/sesame oil), warm water.</td></tr>
- <tr><td><b>Morning drink</b></td><td>Alternate: soaked methi water (blood sugar) · jeera-ajwain-saunf water (bloating) · cinnamon + lemon warm water.</td></tr>
- <tr><td><b>Daily</b></td><td>Amla, curry leaves, haldi + kali mirch in food, ginger.</td></tr>
- <tr><td><b>After meals</b></td><td>½ tsp saunf + 10 min walk.</td></tr>
- <tr><td><b>Night</b></td><td>Haldi doodh (no sugar). Optional Triphala 1 tsp in warm water (digestion).</td></tr>
- <tr><td><b>Weekly</b></td><td>Abhyanga: full body warm sesame-oil massage before Sunday bath.</td></tr></table>
- <div class="note">Ayurveda helps digestion, stress and sleep — but fat loss & muscle come from calories, protein, training and sleep. Avoid "fat-burner" churans and "hair regrowth" miracle products.</div></div>`;
+ setTitle("Glow","Skin · hair · beard · Ayurveda");
+ let h=sh("☀️ Morning · 3 min")+steps([["Gentle face wash","Cetaphil / Simple / Minimalist"],["Vitamin C serum 10–15% or Niacinamide 10%","Dullness, dark spots, oil control"],["Light gel moisturiser",""],["Sunscreen SPF 50 PA+++","Every day, even working from home (window UV). The #1 anti-ageing step."]]);
+ h+=sh("🌙 Night · 3 min")+steps([["Wash face","Twice if you wore sunscreen outside"],["Serum","Weeks 1–2 niacinamide. From week 3: retinol 0.25–0.3%, pea-size, 2 nights/week → every other night. Never with vitamin C or acids the same night."],["Ceramide moisturiser + lip balm",""]]);
+ h+=sh("🗓️ Weekly")+info([["🧴","Salicylic acid (BHA)","Once a week. Clears pores and pollution grime."],["🌼","Ubtan","2 tsp besan + pinch haldi + 1 tsp curd + few drops honey / rose water. 10 min, rinse."],["🌵","Aloe vera gel","On non-retinol nights. Soothing."]])+sf("Patch-test new products on the jaw for 2 days. Persistent acne, pigmentation or dark circles → dermatologist.");
+ h+=sh("Glow from inside")+info([["😴","Sleep 7–8 h","Dull skin and dark circles are mostly sleep and screen time."],["💧","3.5 L water + 5 colours","Beetroot, carrot, spinach, tomato, papaya daily."],["🍬","Cut sugar","Sugar ages skin (glycation) and drives inflammation."],["🍊","Vitamin C & omega-3","Amla, guava, orange for collagen. Walnuts and flax for omega-3."],["💦","Sweat 6 days a week","Better circulation — that athlete flush."]]);
+ h+=sh("Hair & beard")+`<div class="list">
+  <details class="acc" open><summary><span class="tile">💡</span>The honest truth</summary><div class="bd"><p>Grey / white hair is mostly <b>genetic</b> and usually can't be reversed. Low B12, vitamin D, iron, copper, thyroid problems and stress can speed it up — fixing them can slow it.</p><p>Male thinning is usually hormonal and progressive, so start early to keep what you have.</p></div></details>
+  <details class="acc"><summary><span class="tile">🩺</span>Medical options (most effective)</summary><div class="bd"><ul><li>See a <b>dermatologist</b> about <b>Minoxidil 5%</b> and/or oral options — the evidence-based treatments for thinning.</li><li><b>Ketoconazole 2% shampoo</b> twice a week for dandruff / itchy scalp.</li><li>Get blood tests (Progress tab) and fix B12, D3, ferritin, thyroid.</li></ul></div></details>
+  <details class="acc"><summary><span class="tile">🌿</span>Ayurveda hair care</summary><div class="bd"><ul><li>Oil massage twice a week, 1 h before washing: coconut oil heated with <b>curry leaves + methi seeds</b>, or <b>bhringraj / amla oil</b>.</li><li>Daily 1 amla (or 20 ml juice) + 8–10 curry leaves.</li><li>Lukewarm water only, no tight caps or harsh styling.</li><li>Protein 120 g+ a day — hair is made of protein.</li></ul></div></details>
+  <details class="acc"><summary><span class="tile">🧔</span>Beard for a younger look</summary><div class="bd"><ul><li><b>Own it:</b> a short, sharp salt-and-pepper beard (3–6 mm, clean cheek & neck line) looks premium. Barber every 2–3 weeks.</li><li><b>Colour it:</b> ammonia-free beard colour, or henna + indigo (2-step). Patch test first.</li><li>Beard oil daily, trim weekly. A visible jawline from fat loss makes the biggest age difference.</li></ul></div></details></div>`;
+ h+=sh("Ayurveda daily ritual · Dinacharya")+info([["👅","On waking","Tongue scraping, oil pulling 5 min (coconut / sesame oil), warm water."],["🫖","Morning drink","Rotate: methi water (blood sugar) · jeera-ajwain-saunf (bloating) · cinnamon-lemon."],["🌱","Daily","Amla, curry leaves, haldi + kali mirch, ginger in food."],["🚶","After meals","½ tsp saunf + 10 min walk."],["🥛","Night","Haldi doodh, no sugar. Optional Triphala 1 tsp."],["💆","Weekly","Abhyanga: warm sesame-oil body massage before the Sunday bath."]]);
+ h+=`<div class="note">Ayurveda helps digestion, stress and sleep — fat loss and muscle still come from calories, protein, training and sleep. Skip “fat-burner” churans and miracle hair products.</div>`;
+ $("v-glow").innerHTML=h;
 }
 
-/* ================= TRACK / PLAN ================= */
+/* ================= PROGRESS ================= */
+let ck="w";
+function chart(key){
+ const unit=key==="w"?"kg":"cm",L=S.logs.filter(x=>x[key]!=null&&!isNaN(x[key])).sort((a,b)=>a.d<b.d?-1:1);
+ if(L.length<2)return `<div class="empty">Log at least 2 ${key==="w"?"weigh-ins":"waist measurements"} to see your trend line.</div>`;
+ const W=340,H=180,pl=32,pr=58,pt=16,pb=24,xs=L.map(x=>pd(x.d).getTime()),ys=L.map(x=>x[key]);
+ const x0=xs[0],x1=Math.max(xs.at(-1),x0+864e5),mn=Math.min(...ys),mx=Math.max(...ys),sp=Math.max(mx-mn,2);
+ let ts=1;while(sp/ts>4)ts*=2;
+ const y0=Math.floor((mn-sp*.15)/ts)*ts,y1=Math.ceil((mx+sp*.15)/ts)*ts;
+ const X=v=>pl+(v-x0)/(x1-x0)*(W-pl-pr),Y=v=>pt+(y1-v)/(y1-y0)*(H-pt-pb);
+ const pts=L.map((x,i)=>[X(xs[i]),Y(ys[i]),x.d,ys[i]]);
+ let g="";for(let v=y0;v<=y1+1e-9;v+=ts)g+=`<line class="grid" x1="${pl}" x2="${W-pr+8}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ax" x="${pl-6}" y="${Y(v)+3.5}" text-anchor="end">${+v.toFixed(1)}</text>`;
+ const line=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(""),last=pts.at(-1);
+ const area=line+`L${last[0].toFixed(1)} ${H-pb}L${pts[0][0].toFixed(1)} ${H-pb}Z`;
+ CH={pts,unit,W,H};
+ return `<div class="chart" id="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${key==="w"?"Weight":"Waist"} trend"><defs><linearGradient id="ag" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--r1)" stop-opacity=".22"/><stop offset="1" stop-color="var(--r1)" stop-opacity="0"/></linearGradient></defs>${g}
+  <text class="ax" x="${pts[0][0]}" y="${H-6}" text-anchor="start">${fd(L[0].d)}</text><text class="ax" x="${last[0]}" y="${H-6}" text-anchor="end">${fd(L.at(-1).d)}</text>
+  <path d="${area}" fill="url(#ag)"/><path class="ln" d="${line}"/><circle class="dot" cx="${last[0]}" cy="${last[1]}" r="4"/><text class="el" x="${last[0]+8}" y="${last[1]+4}">${last[3]} ${unit}</text>
+  <line class="xh" id="xh" x1="0" x2="0" y1="${pt}" y2="${H-pb}"/><circle class="hd" id="hd" r="5"/><rect id="hit" x="${pl}" y="0" width="${W-pl-pr+8}" height="${H}" fill="transparent"/></svg><div class="tip" id="tip"></div></div>`;
+}
+let CH=null;
+function bindChart(){
+ const c=$("chart");if(!c)return;const svg=c.querySelector("svg");
+ const mv=ev=>{const r=svg.getBoundingClientRect(),sx=(ev.clientX-r.left)*CH.W/r.width;let b=CH.pts[0];CH.pts.forEach(p=>{if(Math.abs(p[0]-sx)<Math.abs(b[0]-sx))b=p});
+  $("xh").setAttribute("x1",b[0]);$("xh").setAttribute("x2",b[0]);$("hd").setAttribute("cx",b[0]);$("hd").setAttribute("cy",b[1]);
+  const tp=$("tip");tp.innerHTML=`<b>${b[3]} ${CH.unit}</b>${fd(b[2])}`;tp.style.left=Math.min(Math.max(b[0]*r.width/CH.W,50),r.width-50)+"px";tp.style.top=b[1]*r.height/CH.H+"px";c.classList.add("hov")};
+ svg.addEventListener("pointermove",mv);svg.addEventListener("pointerdown",mv);svg.addEventListener("pointerleave",()=>c.classList.remove("hov"));
+}
 function renderPlan(){
  const now=new Date(),n=dayNum(now),t=ymd(now);
- let cal="";for(let i=1;i<=84;i++){const d=new Date(pd(S.start));d.setDate(d.getDate()+i-1);const k=ymd(d);const dn=getk(k,"W");const past=i<n;const isRest=d.getDay()===0;cal+=`<div class="${dn?"d1":(past&&!isRest?"ms":"")} ${i===n?"td":""}" title="${k}">${i}</div>`}
+ setTitle("Progress",n<1?`Starts ${fd(S.start)}`:`Day ${Math.min(n,84)} of 84`);
  const doneCount=Object.keys(S.done).filter(k=>S.done[k].W).length;
  let streak=0;{const d=new Date();if(!getk(ymd(d),"W"))d.setDate(d.getDate()-1);while(pd(ymd(d))>=pd(S.start)){if(getk(ymd(d),"W"))streak++;else if(d.getDay()!==0)break;d.setDate(d.getDate()-1)}}
- const L=[...S.logs].sort((a,b)=>a.d<b.d?-1:1);const f=L[0],l=L[L.length-1];
- let h=`<div class="card"><h2>Program</h2><label class="sm mut">Start date (Day 1)</label><input type="date" id="startD" value="${S.start}">
- <div class="row" style="margin-top:10px"><span class="pill a">Workouts done: ${doneCount}</span><span class="pill">🔥 Streak: ${streak}</span><span class="pill">Day ${Math.max(0,Math.min(84,n))}/84</span></div>
- <div class="bar"><i style="width:${Math.max(0,Math.min(100,n/84*100))}%"></i></div>
- <h3>12-week calendar</h3><div class="cal">${cal}</div><p class="sm mut">Green = workout done · red = missed · orange ring = today.</p></div>`;
- h+=`<div class="card"><h2>Log measurements</h2><div class="grid2"><div><label class="sm mut">Date</label><input type="date" id="lgD" value="${t}"></div><div><label class="sm mut">Weight (kg)</label><input type="number" step="0.1" id="lgW" inputmode="decimal"></div><div><label class="sm mut">Waist at navel (cm)</label><input type="number" step="0.5" id="lgWa" inputmode="decimal"></div><div><label class="sm mut">Chest / Arm (cm)</label><input type="text" id="lgC" placeholder="e.g. 100 / 33"></div></div>
- <label class="sm mut">Notes (energy, sleep, strength PRs)</label><textarea id="lgN" rows="2"></textarea><button class="big" id="lgSave">Save entry</button>
- ${L.length>1?`<div class="okn">Since ${f.d}: weight ${(l.w-f.w>0?"+":"")+(l.w-f.w).toFixed(1)} kg${f.wa&&l.wa?` · waist ${(l.wa-f.wa>0?"+":"")+(l.wa-f.wa).toFixed(1)} cm`:""}</div>`:""}
- <table style="margin-top:8px"><tr><th>Date</th><th>Kg</th><th>Waist</th><th>Chest/Arm</th><th></th></tr>${L.slice().reverse().map(x=>`<tr><td>${x.d}</td><td>${x.w||""}</td><td>${x.wa||""}</td><td>${esc(x.c||"")}</td><td><button class="ib" data-del="${x.d}">×</button></td></tr>${x.n?`<tr><td colspan="5" class="mut sm">${esc(x.n)}</td></tr>`:""}`).join("")}</table></div>`;
- h+=`<div class="card"><h2>Realistic 12-week expectations</h2><ul class="b sm">
- <li><b>Weight:</b> 86 → ~77–80 kg (fat loss 7–10 kg while adding some muscle).</li>
- <li><b>Waist:</b> −8 to −12 cm. Belly, back fat and thighs shrink noticeably; clothes fit very differently.</li>
- <li><b>Abs:</b> a full, sharp six-pack needs ~10–12% body fat. You're likely ~28–30% now. In 12 weeks expect a flatter stomach and an <b>upper-ab outline</b> in good light. Full six-pack, veins and deep cuts = continue this plan for another 3–6 months. That's normal — even celebrity transformations take 6–12 months.</li>
- <li><b>Posture:</b> visibly taller & more open chest by week 6–8.</li>
- <li><b>Stamina:</b> HIIT rounds & walks will feel easy by week 6.</li>
- <li><b>Face:</b> fat loss + sleep + SPF/retinol = sharper jawline, less puffiness, clearer skin in 6–8 weeks. You won't reverse your age — but you will look 5+ years younger than you do today.</li></ul></div>`;
- h+=`<div class="card"><h2>Before you start (Week 0)</h2><ul class="b sm">
- <li><b>Blood tests</b> (one package at Thyrocare / Lal PathLabs / Redcliffe ~₹1,500–3,000): CBC, Lipid profile, HbA1c + fasting sugar, Thyroid (TSH, T3, T4), Vitamin D, Vitamin B12, Ferritin/Iron, Liver & Kidney function, Uric acid. Optional: Total testosterone.</li>
- <li>See a doctor before HIIT if you have BP, heart, knee or back issues.</li>
- <li>Take 'before' photos (front/side/back) and measurements. Log them here.</li>
- <li>Buy: kitchen scale, laptop stand, doorway pull-up bar, SPF 50, whey, creatine.</li>
- <li>Repeat blood tests at week 12 — they'll show the inside transformation.</li></ul></div>`;
- h+=`<div class="card"><h2>Backup</h2><p class="sm mut">Data lives only on this device/browser. Export weekly.</p><div class="row"><button class="btn" id="exp">⬇ Export</button><label class="btn">⬆ Import<input type="file" id="imp" accept=".json" class="hide"></label><button class="btn" id="rst" style="color:var(--bad)">Reset all</button></div></div>`;
- document.getElementById("v-plan").innerHTML=h;
+ const L=[...S.logs].sort((a,b)=>a.d<b.d?-1:1),wl=L.filter(x=>x.w),dw=wl.length>1?wl.at(-1).w-wl[0].w:null;
+ let h=`<div class="stats"><div class="stat"><div class="k">Workouts</div><div class="v">${doneCount}</div><div class="u">completed</div></div><div class="stat"><div class="k">Streak</div><div class="v">${streak}</div><div class="u">days 🔥</div></div><div class="stat"><div class="k">Weight</div><div class="v">${dw===null?"—":(dw>0?"+":"")+dw.toFixed(1)}</div><div class="u">kg since start</div></div></div>`;
+ h+=sh("Trend")+`<div class="card">${seg("ck",["Weight","Waist"],ck==="w"?0:1)}${chart(ck)}</div>`;
+ let cal=`<div class="wl"></div>${["1","2","3","4","5","6","7"].map(x=>`<div class="wl" style="text-align:center">${x}</div>`).join("")}`;
+ for(let w=0;w<12;w++){cal+=`<div class="wl">W${w+1}</div>`;for(let j=1;j<=7;j++){const i=w*7+j,d=pd(S.start);d.setDate(d.getDate()+i-1);const k=ymd(d),dn=getk(k,"W"),ms=!dn&&i<n&&d.getDay()!==0;cal+=`<div class="c ${dn?"ok":ms?"ms":""} ${i===n?"td":""}" title="${fd(k)}">${dn?"✓":i}</div>`}}
+ h+=sh("12-week calendar")+`<div class="card"><div class="cal">${cal}</div><div class="legend"><span><i style="background:var(--green)">✓</i>Done</span><span><i style="background:color-mix(in srgb,var(--red) 16%,transparent)"></i>Missed</span><span><i style="box-shadow:inset 0 0 0 2px var(--tint)"></i>Today</span></div></div>`;
+ h+=sh("Log measurements")+`<div class="list"><label class="fm"><span>Date</span><input type="date" id="lgD" value="${t}"></label><label class="fm"><span>Weight</span><input type="number" step="0.1" id="lgW" inputmode="decimal" placeholder="kg"></label><label class="fm"><span>Waist at navel</span><input type="number" step="0.5" id="lgWa" inputmode="decimal" placeholder="cm"></label><label class="fm"><span>Chest / arm</span><input type="text" id="lgC" placeholder="100 / 33 cm"></label><label class="fm"><textarea id="lgN" rows="2" placeholder="Notes: energy, sleep, strength PRs"></textarea></label></div><button class="btn" id="lgSave">Save entry</button>`+sf("Weigh weekly: same day, morning, after the toilet, before food.");
+ if(L.length)h+=sh("History")+`<div class="list flat">${L.slice().reverse().map(x=>`<div class="cell"><div class="ct"><div class="t1">${fd(x.d)}</div><div class="t2">${[x.w?x.w+" kg":"",x.wa?x.wa+" cm waist":"",x.c?esc(x.c):""].filter(Boolean).join(" · ")}${x.n?"<br>"+esc(x.n):""}</div></div><button class="del" data-del="${x.d}" aria-label="Delete">×</button></div>`).join("")}</div>`;
+ h+=sh("Program")+`<div class="list"><label class="fm"><span>Start date (Day 1)</span><input type="date" id="startD" value="${S.start}"></label></div>`;
+ h+=sh("What to expect in 12 weeks")+`<div class="list">
+  <details class="acc" open><summary><span class="tile">⚖️</span>Weight & waist</summary><div class="bd"><p>86 → about 77–80 kg (7–10 kg of fat lost while adding some muscle). Waist −8 to −12 cm; belly, back and thighs shrink noticeably.</p></div></details>
+  <details class="acc"><summary><span class="tile">💪</span>Abs, cuts & veins</summary><div class="bd"><p>A full six-pack needs ~10–12% body fat; you're likely ~28–30% now. In 12 weeks expect a flat stomach and an <b>upper-ab outline</b> in good light. Full six-pack, veins and deep cuts take another 3–6 months of this plan — even celebrity transformations take 6–12 months.</p></div></details>
+  <details class="acc"><summary><span class="tile">🧍</span>Posture & stamina</summary><div class="bd"><p>Visibly taller and more open chest by week 6–8. HIIT rounds and long walks feel easy by week 6.</p></div></details>
+  <details class="acc"><summary><span class="tile">✨</span>Face & age</summary><div class="bd"><p>Fat loss + sleep + SPF / retinol = sharper jawline, less puffiness, clearer skin in 6–8 weeks. You can't reverse age — but you can look 5+ years younger than today.</p></div></details></div>`;
+ h+=sh("Before you start · week 0")+info([["🩸","Blood tests","CBC, lipids, HbA1c + fasting sugar, thyroid (TSH/T3/T4), vitamin D, B12, ferritin, liver & kidney, uric acid. ~₹1,500–3,000 at Thyrocare / Lal PathLabs / Redcliffe. Repeat at week 12."],["🩺","Doctor check","Before HIIT if you have BP, heart, knee or back issues."],["📸","Before photos","Front, side, back — same light, same spot. Log measurements above."],["🛒","Buy","Kitchen scale, laptop stand, doorway pull-up bar, SPF 50, whey, creatine."]]);
+ h+=sh("Backup")+`<div class="list flat"><div class="cell tap" id="exp"><div class="ct"><div class="t1" style="color:var(--tint)">Export data</div></div></div><label class="cell tap"><div class="ct"><div class="t1" style="color:var(--tint)">Import data</div></div><input type="file" id="imp" accept=".json" class="hide"></label><div class="cell tap" id="rst"><div class="ct"><div class="t1" style="color:var(--red)">Reset everything</div></div></div></div>`+sf("Data is stored only on this device. Export once a week.");
+ $("v-plan").innerHTML=h;bindChart();
 }
 
-/* ================= EVENTS ================= */
+/* ================= SHEET ================= */
+function openSheet(id,rx){
+ const ex=EX[id];
+ $("sheet").innerHTML=`<div class="grab"></div><h3>${esc(ex[0])}</h3><span class="badge">${esc(rx)}</span><div class="how">How to do it</div><p>${esc(ex[1])}</p><a class="btn" href="${yt(ex[0])}" target="_blank" rel="noopener">▶ Watch demo</a><button class="btn gray" data-close style="margin-top:10px">Done</button>`;
+ $("sbg").classList.add("open");$("sheet").classList.add("open");$("sheet").style.transform="";
+}
+function closeSheet(){$("sbg").classList.remove("open");$("sheet").classList.remove("open");$("sheet").style.transform=""}
+(()=>{let y0=null,dy=0;const sh=$("sheet");
+ sh.addEventListener("touchstart",e=>{if(sh.scrollTop<=0){y0=e.touches[0].clientY;dy=0;sh.style.transition="none"}},{passive:true});
+ sh.addEventListener("touchmove",e=>{if(y0===null)return;dy=Math.max(0,e.touches[0].clientY-y0);sh.style.transform=`translateY(${dy}px)`},{passive:true});
+ sh.addEventListener("touchend",()=>{if(y0===null)return;sh.style.transition="";y0=null;if(dy>90)closeSheet();else sh.style.transform=""});
+})();
+
+/* ================= NAV & EVENTS ================= */
 const R={today:renderToday,train:renderTrain,diet:renderDiet,posture:renderPosture,glow:renderGlow,plan:renderPlan};
 let cur="today";
-function show(v){cur=v;document.querySelectorAll("main>section").forEach(s=>s.classList.toggle("hide",s.id!=="v-"+v));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));R[v]();window.scrollTo(0,0)}
-document.getElementById("nav").addEventListener("click",ev=>{const b=ev.target.closest("button");if(b)show(b.dataset.v)});
-document.addEventListener("change",ev=>{const x=ev.target;
- if(x.dataset.k){setk(x.dataset.d,x.dataset.k,x.checked);if(x.dataset.k.startsWith("h-"))renderToday();return}
- if(x.id==="startD"&&x.value){S.start=x.value;save();renderPlan();renderToday()}
- if(x.id==="imp"&&x.files[0]){const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(o.start&&o.done){S=o;save();show(cur);alert("Imported ✔")}}catch(_){alert("Invalid file")}};r.readAsText(x.files[0])}
+function show(v){
+ cur=v;document.querySelectorAll("main>section").forEach(s=>{const on=s.id==="v-"+v;s.classList.toggle("hide",!on);s.classList.remove("in");if(on){void s.offsetWidth;s.classList.add("in")}});
+ document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));R[v]();window.scrollTo(0,0);onScroll();
+}
+function onScroll(){$("nb").classList.toggle("sc",window.scrollY>36)}
+window.addEventListener("scroll",onScroll,{passive:true});
+$("nav").addEventListener("click",ev=>{const b=ev.target.closest("button");if(b){haptic();if(b.dataset.v===cur)window.scrollTo({top:0,behavior:"smooth"});else show(b.dataset.v)}});
+$("sbg").addEventListener("click",closeSheet);
+const SEG={mode:j=>{S.mode=j?"gym":"home";save();renderToday()},tm:j=>{tr.mode=j?"gym":"home";renderTrain()},tp:j=>{tr.ph=j;renderTrain()},ck:j=>{ck=j?"wa":"w";renderPlan()}};
+const WK={td:i=>{tr.dow=i;renderTrain()},dd:i=>{dd=i;renderDiet()}};
+document.addEventListener("click",ev=>{
+ const x=ev.target.closest("button,[data-ex],[data-goday],#exp,#rst");if(!x||x.closest("#nav"))return;
+ if(x.classList.contains("chk")){ev.stopPropagation();const on=!x.classList.contains("on");haptic();x.classList.toggle("on",on);x.closest(".cell").classList.toggle("dn",on);setk(x.dataset.d,x.dataset.k,on);if(cur==="today")refreshToday();return}
+ const sg=x.closest(".segc");
+ if(sg&&x.dataset.sv!==undefined){const j=+x.dataset.sv;if(+sg.style.getPropertyValue("--i")===j)return;haptic();sg.style.setProperty("--i",j);sg.querySelectorAll("button").forEach((b,k)=>b.classList.toggle("on",k===j));setTimeout(()=>SEG[sg.dataset.seg](j),230);return}
+ const wk=x.closest(".wk");
+ if(wk&&x.dataset.wv!==undefined){haptic();WK[wk.dataset.wk](+x.dataset.wv);return}
+ if(x.dataset.ex){haptic();openSheet(x.dataset.ex,x.dataset.rx);return}
+ if(x.dataset.goday!==undefined){tr.dow=+x.dataset.goday;renderTrain();window.scrollTo({top:0,behavior:"smooth"});return}
+ if("close" in x.dataset){closeSheet();return}
+ if(x.id==="wdone"){const t=ymd(new Date()),on=!getk(t,"W");setk(t,"W",on);haptic();x.classList.toggle("done",on);x.textContent=on?"✓ Workout complete":"Complete workout";refreshToday();if(on){confetti(x);toast("💪 Workout logged!")}return}
+ if(x.id==="pdone"){const t=ymd(new Date()),on=!getk(t,"h-post");setk(t,"h-post",on);haptic();x.classList.toggle("done",on);x.textContent=on?"✓ Done for today":"Mark done for today";if(on)toast("🧍 Posture done");return}
+ if(x.dataset.del){if(confirm("Delete the entry for "+fd(x.dataset.del)+"?")){S.logs=S.logs.filter(l=>l.d!==x.dataset.del);save();renderPlan()}return}
+ if(x.id==="lgSave"){const d=$("lgD").value,w=parseFloat($("lgW").value),wa=parseFloat($("lgWa").value);if(!d||(!w&&!wa)){toast("Enter weight or waist");return}
+  S.logs=S.logs.filter(l=>l.d!==d);S.logs.push({d,w:w||null,wa:wa||null,c:$("lgC").value,n:$("lgN").value});save();haptic();renderPlan();toast("✓ Saved");return}
+ if(x.id==="exp"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:"application/json"}));a.download="transform-backup-"+ymd(new Date())+".json";a.click();return}
+ if(x.id==="rst"){if(confirm("Erase ALL progress, logs and settings?")){localStorage.removeItem("tx");location.reload()}return}
 });
-document.addEventListener("click",ev=>{const x=ev.target.closest("button");if(!x||x.closest("nav"))return;const ds=x.dataset;
- if("cue" in ds){x.closest("li").querySelector(".cue").classList.toggle("show")}
- else if(ds.mode){S.mode=ds.mode;save();renderToday()}
- else if(ds.wd){setk(ds.wd,"W",!getk(ds.wd,"W"));renderToday()}
- else if(ds.tm){tr.mode=ds.tm;renderTrain()}else if(ds.tp){tr.ph=+ds.tp;renderTrain()}else if(ds.td){tr.dow=+ds.td;renderTrain()}
- else if(ds.dd){dd=+ds.dd;renderDiet()}
- else if(ds.del){if(confirm("Delete entry "+ds.del+"?")){S.logs=S.logs.filter(l=>l.d!==ds.del);save();renderPlan()}}
- else if(x.id==="lgSave"){const d=document.getElementById("lgD").value,w=parseFloat(document.getElementById("lgW").value),wa=parseFloat(document.getElementById("lgWa").value);if(!d||(!w&&!wa)){alert("Enter weight or waist");return}
-  S.logs=S.logs.filter(l=>l.d!==d);S.logs.push({d,w:w||null,wa:wa||null,c:document.getElementById("lgC").value,n:document.getElementById("lgN").value});save();renderPlan()}
- else if(x.id==="exp"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:"application/json"}));a.download="transform-backup-"+ymd(new Date())+".json";a.click()}
- else if(x.id==="rst"){if(confirm("Erase ALL progress, logs and settings?")){localStorage.removeItem("tx");location.reload()}}
+document.addEventListener("change",ev=>{const x=ev.target;
+ if(x.id==="startD"&&x.value){S.start=x.value;save();renderPlan();toast("Start date updated")}
+ if(x.id==="imp"&&x.files[0]){const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(o.start&&o.done){S=o;save();show(cur);toast("✓ Imported")}else toast("Invalid file")}catch(_){toast("Invalid file")}};r.readAsText(x.files[0])}
 });
 show("today");
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
