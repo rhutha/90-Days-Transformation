@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Transform">
+<meta name="theme-color" content="#0f1115">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-512.png">
+<title>90-Day Transformation</title>
+<style>
+:root{--bg:#0f1115;--card:#181b22;--card2:#20242d;--line:#2a2f3a;--tx:#e8eaef;--mut:#9aa1ad;--acc:#ff7a1a;--ok:#22c55e;--warn:#f59e0b;--bad:#ef4444}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:0;z-index:5;background:rgba(15,17,21,.92);backdrop-filter:blur(10px);padding:calc(env(safe-area-inset-top) + 10px) 16px 10px;border-bottom:1px solid var(--line)}
+header h1{margin:0;font-size:18px}
+header .sub{color:var(--mut);font-size:13px}
+main{padding:12px 12px calc(84px + env(safe-area-inset-bottom));max-width:720px;margin:0 auto}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:5;display:flex;background:rgba(20,22,28,.97);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;border:0;color:var(--mut);padding:8px 0 7px;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button span{font-size:20px;line-height:1}
+nav button.on{color:var(--acc)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.card h2{margin:0 0 8px;font-size:17px}
+.card h3{margin:12px 0 6px;font-size:15px;color:var(--acc)}
+.mut{color:var(--mut)}.sm{font-size:13px}
+.pill{display:inline-block;padding:3px 9px;border-radius:99px;background:var(--card2);border:1px solid var(--line);font-size:12px;margin:2px 4px 2px 0}
+.pill.a{background:var(--acc);border-color:var(--acc);color:#111;font-weight:600}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px}
+.chips button,.seg button{background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:7px 12px;font-size:14px;white-space:nowrap}
+.chips button.on,.seg button.on{background:var(--acc);color:#111;border-color:var(--acc);font-weight:600}
+.seg{display:flex;gap:6px;margin-bottom:10px}.seg button{flex:1}
+ul.ex{list-style:none;margin:0;padding:0}
+ul.ex li{border-top:1px solid var(--line);padding:9px 0}
+ul.ex li:first-child{border-top:0}
+.exr{display:flex;align-items:center;gap:10px}
+.exr label{flex:1;display:flex;gap:10px;align-items:center}
+.exr .nm{flex:1}
+.rx{color:var(--acc);font-weight:600;font-size:13px;text-align:right;max-width:46%}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--ok);flex:none}
+.ib{background:var(--card2);border:1px solid var(--line);color:var(--mut);border-radius:50%;width:26px;height:26px;font-size:13px;flex:none}
+.cue{display:none;margin:8px 0 0 32px;font-size:13px;color:var(--mut)}
+.cue.show{display:block}
+.cue a{color:var(--acc);text-decoration:none;font-weight:600}
+.blk{margin-top:10px}
+.blk>.bh{font-weight:700;font-size:14px;display:flex;justify-content:space-between;color:var(--tx);margin-bottom:2px}
+.note{background:#2a1f12;border:1px solid #5a3a14;color:#ffd7b0;border-radius:10px;padding:9px 11px;font-size:13px;margin:8px 0}
+.okn{background:#0f2418;border:1px solid #1d5232;color:#b9f5cf;border-radius:10px;padding:9px 11px;font-size:13px;margin:8px 0}
+.big{width:100%;padding:13px;border-radius:12px;border:0;font-size:16px;font-weight:700;background:var(--acc);color:#111;margin-top:10px}
+.big.done{background:var(--ok)}
+.btn{background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:8px 12px;font-size:14px}
+.meal{display:grid;grid-template-columns:62px 1fr;gap:8px;padding:8px 0;border-top:1px solid var(--line)}
+.meal:first-of-type{border-top:0}
+.meal .t{color:var(--acc);font-weight:700;font-size:13px}
+.meal b{display:block;font-size:14px}
+.meal .d{font-size:13.5px;color:#cfd3da}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+td,th{border-bottom:1px solid var(--line);padding:7px 5px;text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:600}
+input[type=number],input[type=date],input[type=text],textarea{background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:9px;font-size:16px;width:100%}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal div{aspect-ratio:1;border-radius:7px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--mut)}
+.cal .d1{background:var(--ok);color:#06210f;font-weight:700}
+.cal .td{outline:2px solid var(--acc)}
+.cal .ms{background:#3a1d1d}
+.bar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--acc)}
+details{border-top:1px solid var(--line);padding:9px 0}
+details:first-of-type{border-top:0}
+summary{font-weight:600;cursor:pointer}
+details p,details li{font-size:13.5px;color:#cfd3da}
+ol,ul.b{padding-left:20px;margin:6px 0}
+.hide{display:none}
+</style>
+</head>
+<body>
+<header><h1 id="ttl">90-Day Transformation</h1><div class="sub" id="hsub"></div></header>
+<main>
+  <section id="v-today"></section>
+  <section id="v-train" class="hide"></section>
+  <section id="v-diet" class="hide"></section>
+  <section id="v-posture" class="hide"></section>
+  <section id="v-glow" class="hide"></section>
+  <section id="v-plan" class="hide"></section>
+</main>
+<nav id="nav">
+  <button data-v="today" class="on"><span>🏠</span>Today</button>
+  <button data-v="train"><span>🏋️</span>Train</button>
+  <button data-v="diet"><span>🥗</span>Diet</button>
+  <button data-v="posture"><span>🧍</span>Posture</button>
+  <button data-v="glow"><span>✨</span>Glow</button>
+  <button data-v="plan"><span>📈</span>Track</button>
+</nav>
+
+<script>
+/* ================= EXERCISE LIBRARY ================= */
+const EX={
+// warm-up / mobility
+jj:["Jumping jacks (or quiet step-jacks)","Stay light on toes. In a flat/quiet room: step one foot out at a time while raising arms."],
+armc:["Arm circles","Small → big circles, 30s forward, 30s backward. Shoulders down, away from ears."],
+catcow:["Cat-cow","On all fours. Inhale: chest forward, look up. Exhale: round the back fully. Slow, with breath."],
+scappu:["Scapular push-ups","Plank position, arms straight. Only move shoulder blades: squeeze together, then push apart."],
+pullap:["Band pull-aparts","Arms straight at chest height, pull band apart until it touches chest. Squeeze shoulder blades 1s."],
+hipcirc:["Hip circles","Hands on hips, big slow circles each direction."],
+legsw:["Leg swings","Hold wall. Swing leg front-back, then side-to-side. Controlled."],
+bwsq:["Bodyweight squats","Feet shoulder-width, chest up, sit hips back and down, knees track over toes."],
+glbr:["Glute bridge","Lie on back, feet flat. Drive through heels, squeeze glutes at top, ribs down (don't arch lower back)."],
+wgs:["World's greatest stretch","Deep lunge, same-side elbow to instep, then rotate that arm to ceiling. Opens hips + upper back."],
+inch:["Inchworms","Hinge, walk hands out to plank, walk back. Keep legs as straight as comfortable."],
+halo:["Kettlebell halo","Hold KB by horns at chest, circle it slowly around your head. Brace abs, don't arch."],
+// push
+pu:["Push-ups","Hands slightly wider than shoulders, body one straight line, elbows ~45°. Chest touches floor. Too hard? Hands on bed/table (incline)."],
+dbfp:["Dumbbell floor press","Lie on mat, press both DBs from chest. Elbows touch floor softly each rep, pause, press. Great chest builder with light weights."],
+dbsp:["Seated dumbbell shoulder press","Sit tall on chair/floor, back straight. Press DBs overhead, don't arch lower back. Lower to ear level."],
+latr:["Dumbbell lateral raise","Slight lean forward, raise arms to sides up to shoulder height, lead with elbows, lower in 3s. Key for wide 'V' shape."],
+pikepu:["Pike push-ups","Hips high (inverted V), lower head toward floor between hands. Builds shoulders."],
+ohte:["Overhead triceps extension","Hold one 8kg DB with both hands overhead, lower behind head, elbows pointing up, extend."],
+bpush:["Band triceps pushdown","Anchor band high on door. Elbows pinned to sides, push down to straight arms, squeeze triceps."],
+bfly:["Band chest fly","Band anchored behind you at chest height. Arms slightly bent, hug forward and squeeze chest."],
+// legs
+gsq:["Goblet squat (kettlebell)","Hold KB at chest, elbows inside knees at bottom, chest up, full depth, drive through whole foot."],
+dbrdl:["Dumbbell Romanian deadlift","Soft knees, push hips BACK, DBs slide along thighs to mid-shin, flat back. Feel hamstrings stretch, squeeze glutes up."],
+bss:["Bulgarian split squat","Back foot on bed/chair, front foot ~2 ft forward. Drop back knee straight down. Hold DBs. Best leg builder at home."],
+rlunge:["Reverse lunge","Step back, both knees ~90°, push through front heel to return. Torso tall."],
+slgb:["Single-leg hip thrust","Upper back on bed/sofa edge, one foot down, KB on hip. Drive up, full glute squeeze 1–2s at top."],
+calf:["Single-leg calf raise","On stair edge, holding wall. Full stretch down, rise high, 1s pause at top. Hold DB to progress."],
+kbsw:["Kettlebell swing","HIP HINGE, not squat. Snap hips forward to float KB to chest height; arms are ropes. Flat back, brace abs."],
+sumo:["Kettlebell sumo squat","Wide stance, toes out, KB hanging between legs, sit straight down, squeeze inner thighs + glutes up."],
+kbgl:["Goblet reverse lunge","Hold KB at chest, step back into lunge, alternate legs."],
+// pull
+dbrow:["Single-arm dumbbell row","Hand & knee on bed, back flat. Pull DB to hip pocket (not chest), squeeze shoulder blade, 3s down."],
+brow:["Band seated row","Sit, legs straight, band around feet. Pull to belly, elbows close, chest up, squeeze back."],
+bpd:["Band lat pulldown","Anchor band high on door (top hinge). Kneel, pull elbows down to ribs. Builds the back 'V'."],
+fpull:["Band face pulls","Band at face height. Pull toward forehead, elbows high, rotate hands back. #1 exercise for rounded shoulders."],
+rfly:["Bent-over reverse fly","Hinge forward, light DBs, raise arms out to sides with slight bend. Squeeze upper back. Fixes posture."],
+curl:["Dumbbell biceps curl","Elbows pinned, no swinging. Squeeze at top, lower in 3s. 21s = 7 bottom half + 7 top half + 7 full."],
+hamc:["Hammer curl","Palms facing each other, curl up. Builds forearm + arm thickness."],
+ytw:["Prone Y-T-W raises","Lie face down, thumbs up. Raise arms in Y, then T, then W shape. Hold 2s each. Posture gold."],
+superman:["Superman hold","Lie face down, lift arms, chest and legs. Hold 2s, lower. Strengthens lower back."],
+// hiit / full body
+slam:["Slam ball slams","Raise ball overhead on toes, slam down hard with whole body, squat to pick up. Exhale on slam."],
+burp:["Burpees (or no-jump squat thrust)","Squat, hands down, step/jump to plank, back up. Quiet version: step back & forward, no jump."],
+mc:["Mountain climbers","Plank, drive knees to chest fast. Hips low, shoulders over wrists."],
+thr:["Dumbbell thrusters","DBs at shoulders, squat deep, drive up and press overhead in one motion."],
+skater:["Skater hops (or lateral lunges)","Leap side to side, landing on one leg. Quiet version: alternating lateral lunges."],
+kbcp:["Kettlebell clean & press","Swing KB to rack (at shoulder, rests on forearm), then press overhead. Each side."],
+renrow:["Renegade row","Push-up position on DBs, feet wide. Row one DB without rotating hips. Alternate."],
+tgu:["Half Turkish get-up","Lie down, KB pressed up in one hand, eyes on it. Roll to elbow, then hand, then back down. Slow. Shoulder stability + core."],
+farmer:["Farmer carry / march","Hold DB/KB heavy at sides, walk or march in place tall, shoulders back, slow breathing."],
+// core
+abr:["Ab roller rollout","Kneel, round lower back slightly (posterior tilt), roll out only as far as you can keep hips from sagging, pull back with abs. Start short range."],
+plank:["Plank","Forearms under shoulders, squeeze glutes & abs, body in a line. Don't let hips sag."],
+dbug:["Dead bug","On back, arms up, knees 90°. Lower opposite arm & leg slowly while pressing lower back into floor."],
+bdog:["Bird dog","All fours, extend opposite arm & leg, hold 2s, no hip rotation."],
+splank:["Side plank","Elbow under shoulder, hips high, body straight. Hits obliques & waist."],
+rtwist:["Russian twist (slam ball)","Sit, lean back 45°, feet up or down, rotate ball side to side. Rotate from ribs, not arms."],
+lraise:["Lying leg raises","On back, hands under hips, legs straight up/down slowly, lower back stays pressed down. Lower abs."],
+bicy:["Bicycle crunches","Slow! Elbow to opposite knee, extend other leg fully."],
+hollow:["Hollow body hold","On back, lower back pressed to floor, arms overhead & legs raised low. Bend knees to make easier."],
+ptap:["Plank shoulder taps","High plank, feet wide, tap opposite shoulder without rocking hips."],
+vup:["V-ups (or tuck-ups)","Lie flat, lift legs and torso together to touch toes. Easier: tuck knees in."],
+revcr:["Reverse crunch","On back, knees bent, curl hips off floor toward chest, lower slowly. Lower abs."],
+// stretch / yoga / posture
+pecst:["Doorway chest stretch","Forearm on door frame at shoulder height, step through until chest stretches. Opens rounded shoulders."],
+child:["Child's pose (Balasana)","Knees wide, hips to heels, arms long, breathe into back."],
+hipflex:["Kneeling hip-flexor stretch","Half kneel, squeeze glute of back leg, shift forward. Fixes sitting-tight hips & belly-pooch posture."],
+hamst:["Hamstring stretch","Lie on back, band around foot, raise straight leg until stretch."],
+pigeon:["Figure-4 / pigeon stretch","Ankle on opposite knee, pull legs in (lying) — or pigeon pose. Releases glutes & lower back."],
+surya:["Surya Namaskar","12-pose sun salutation. Slow with breath first 2 rounds, then steady pace. Full body warm-up + fat burn."],
+bhuj:["Bhujangasana (cobra)","Lie face down, press chest up with back muscles, elbows soft, shoulders away from ears."],
+setu:["Setu Bandhasana (bridge)","Lift hips, interlace hands under you, open chest. Hold with steady breathing."],
+trikon:["Trikonasana (triangle)","Wide legs, reach sideways and down to shin, other arm to sky, chest open."],
+anulom:["Anulom Vilom","Alternate nostril breathing, slow 4s in, 4–6s out. Calms stress (cortisol) & improves focus."],
+bhram:["Bhramari","Close ears with thumbs, hum like a bee on exhale. Reduces stress, aids sleep."],
+kapal:["Kapalbhati","Sharp exhales through nose by snapping belly in, passive inhale. SKIP if you have high BP, heart issues, hernia or on a full stomach."],
+chin:["Chin tucks","Sit/stand tall, glide chin straight back (double chin), hold 3s. Fixes forward head posture from phone/laptop."],
+wangel:["Wall angels","Back, head & butt against wall, arms in 'W' on wall, slide up to 'Y' and back without losing contact."],
+thor:["Thoracic extension (towel roll)","Roll a thick towel, place under upper back, hands behind head, gently extend over it. Move up 2–3 spots."],
+thread:["Thread the needle","All fours, slide one arm under body rotating upper back, then open to ceiling."],
+wallchk:["Wall posture check","Stand with heels, butt, shoulders and head on wall for 60s. Memorise that feeling."],
+shav:["Shavasana","Lie still, slow breathing, relax every body part."],
+walk:["Walk (walking pad / outdoors)","Brisk pace = you can talk but not sing. Walking pad during meetings counts!"],
+// gym
+bench:["Barbell bench press","Shoulder blades squeezed & down, feet planted, bar to mid-chest, press up & slightly back."],
+incdb:["Incline dumbbell press","Bench 30°, press DBs over upper chest. Builds upper chest shelf."],
+sdbsp:["Seated dumbbell shoulder press","Back supported, press overhead, lower to ear level."],
+clat:["Cable lateral raise","Cable at lowest, behind body, raise to shoulder height. Constant tension = capped delts."],
+cfly:["Cable fly / pec deck","Slight elbow bend, hug a big tree, squeeze chest 1s."],
+rope:["Rope triceps pushdown","Elbows pinned, split rope at bottom, squeeze."],
+cohe:["Overhead cable triceps extension","Face away from cable, extend rope overhead. Long-head triceps."],
+ccrunch:["Cable crunch","Kneel, rope by head, crunch ribs to hips (spine flexion, not hip bend)."],
+hkr:["Hanging knee / leg raise","Hang from bar, curl pelvis up, no swinging. Progress to straight legs."],
+lpd:["Lat pulldown","Chest up, pull bar to upper chest, elbows drive down to ribs."],
+apu:["Pull-ups (assisted if needed)","Use assisted machine or band. Full hang to chin over bar. The king of back width."],
+cbrow:["Seated cable row","Chest tall, pull to belly, squeeze shoulder blades, no leaning back."],
+csrow:["Chest-supported dumbbell row","Chest on incline bench, row DBs to hips. Zero lower-back strain."],
+cfp:["Cable face pull","Rope at face height, pull to forehead, elbows high, externally rotate."],
+rdfly:["Reverse pec deck","Face the pad, arms wide, sweep back. Rear delts = better posture."],
+bbcurl:["Barbell / EZ-bar curl","Elbows still, curl & squeeze, slow down."],
+bext:["Back extension (45°)","Hinge at hips, rise until body straight. Don't hyperextend."],
+sq:["Back squat (or Smith / leg press)","Brace hard, sit down between hips, depth to parallel or below. Learn with a trainer if new."],
+rdl:["Barbell Romanian deadlift","Hinge, bar close to legs, flat back, feel hamstrings, hips forward."],
+wlunge:["Walking lunges (dumbbells)","Long steps, back knee kisses floor, torso tall."],
+lp:["Leg press","Feet shoulder-width, lower until knees ~90°, don't lock knees. High feet = more glutes."],
+lcurl:["Leg curl (lying/seated)","Hips down, curl fully, slow 3s return."],
+lext:["Leg extension","Squeeze quads 1s at top, slow lowering."],
+hthrust:["Barbell hip thrust","Upper back on bench, bar on hips (pad), drive up, chin tucked, squeeze."],
+scalf:["Standing calf raise","Full stretch at bottom, pause at top."],
+incb:["Incline barbell / Smith press","30° incline, bar to upper chest."],
+arnold:["Arnold press","Start palms facing you, rotate out as you press. Full shoulder."],
+sacr:["Single-arm cable row","Pull elbow back past torso, slight rotation, squeeze."],
+tbdl:["Trap-bar deadlift (or KB deadlift)","Stand in the middle, flat back, push the floor away. Safest heavy deadlift."],
+pallof:["Pallof press","Stand side-on to cable, press handle straight out and resist rotation. Anti-rotation core."],
+carry:["Farmer carry (heavy)","Heavy DBs, walk tall, short steps, brace."],
+bike:["Air bike / cycle intervals","Sprint all-out for work time, very easy for rest."],
+iwalk:["Incline treadmill walk","Don't hold rails. Elite fat burner, easy on knees."],
+stair:["Stairmaster","Steady pace, don't lean on rails."],
+};
+
+/* ================= PRESCRIPTION HELPERS (P1 / P2 / P3) ================= */
+const C=["3×10–12 · RPE 7 (2–3 reps left)","4×8–10 · RPE 8 · add weight weekly","4×6–8 heavy + drop set on last set"];
+const I=["3×12–15","3×12–15 · 2s squeeze","4×12–15 + drop set on last set"];
+const K=["3×10–12","3×12–15","4×15"];
+const e=(id,p)=>({e:id,p});
+
+/* ================= HOME PLAN (index 0=Sun … 6=Sat) ================= */
+const SAT={t:"Yoga + Mobility + Long Walk",f:"Recovery · Flexibility · Stress · Fat burn",m:60,b:[
+ {h:"Yoga flow (25 min)",x:[e("surya",["6 rounds","9 rounds","12 rounds"]),e("bhuj","3×20s"),e("setu","3×20s"),e("trikon","30s/side"),e("catcow","10"),e("thread","6/side"),e("pigeon","45s/side"),e("wangel","2×10")]},
+ {h:"Pranayama (10 min)",x:[e("anulom","5 min"),e("bhram","7 rounds"),e("kapal",["1 min slow","2 min","3 min"])]},
+ {h:"Long walk",x:[e("walk",["40 min","50 min","60 min"])]}]};
+const SUN={t:"Rest + Recovery + Weekly Check-in",f:"Muscles grow on rest days",m:40,b:[
+ {h:"Active rest",x:[e("walk","30 min easy"),e("chin","2×10"),e("wangel","2×10"),e("pecst","45s/side"),e("hipflex","45s/side")]},
+ {h:"Weekly tasks",x:[{e:"_w",n:"Weigh-in (morning, empty stomach) + waist at navel → log in Track",p:"✓"},{e:"_p",n:"Progress photos: front, side, back (same light)",p:"✓"},{e:"_m",n:"Meal prep: boil eggs, soak chana/rajma, make sprouts, chop veggies, hung curd",p:"✓"}]}]};
+
+const HOME=[SUN,
+{t:"Push + Core",f:"Chest · Shoulders · Triceps · Abs",m:60,b:[
+ {h:"Warm-up (8 min)",x:[e("jj","2 min"),e("armc","1 min"),e("catcow","10"),e("scappu","12"),e("pullap","20")]},
+ {h:"Strength (35 min) · rest 45–60s",x:[e("pu",["3×max (incline on bed if <10)","4×max · 3s lowering","4×max · feet on bed (decline)"]),e("dbfp",["3×15","4×15 · 3-1-1 tempo","4×20 · 1½ reps"]),e("dbsp",["3×12","4×12","4×15 + 10 partials"]),e("latr",["3×15","4×15 · 3s down","4×20 + 10 partials"]),e("pikepu",["2×8","3×10","3×12"]),e("ohte",["3×12","4×12","4×15"]),e("bpush",["3×15","3×20","4×20"])]},
+ {h:"Core (10 min)",x:[e("abr",["3×6 short range","4×8","4×10–12"]),e("plank",["3×30s","3×45s","3×60s"]),e("dbug",["3×10/side","3×12/side","3×15/side"])]},
+ {h:"Finisher",x:[e("slam",["Optional: 3 × 20s on/40s off","5 × 30s on/30s off","6 × 40s on/20s off"])]},
+ {h:"Cool-down",x:[e("pecst","45s/side"),e("child","1 min"),e("chin","15")]}]},
+{t:"Lower Body + Glutes",f:"Quads · Hamstrings · Glutes · Calves",m:60,b:[
+ {h:"Warm-up (8 min)",x:[e("hipcirc","10/dir"),e("legsw","10/side"),e("bwsq","15"),e("glbr","15"),e("wgs","5/side")]},
+ {h:"Strength (35 min) · rest 45–60s",x:[e("gsq",["3×15","4×15 · 3s down","4×20 · 1½ reps"]),e("dbrdl",["3×12","4×12 · 3s down","4×15 · 3s down"]),e("bss",["3×10/leg","4×12/leg","4×12/leg + 10 pulses"]),e("rlunge",["3×10/leg","3×12/leg","4×12/leg"]),e("slgb",["3×12/leg","4×12/leg · 2s hold","4×15/leg · 2s hold"]),e("calf",["3×15/leg","3×20/leg","4×20/leg"]),e("kbsw",["3×15","4×20","5×20"])]},
+ {h:"Core",x:[e("lraise",["3×10","3×12","4×15"]),e("rtwist",["3×20","3×30","4×30"])]},
+ {h:"Cool-down + walk",x:[e("hipflex","45s/side"),e("hamst","45s/side"),e("pigeon","45s/side"),e("walk",["15 min easy","20 min brisk","25 min brisk"])]}]},
+{t:"Pull + Posture Fix",f:"Back · Rear delts · Biceps · Posture",m:60,b:[
+ {h:"Warm-up (8 min)",x:[e("armc","1 min"),e("catcow","10"),e("thread","6/side"),e("pullap","20"),e("chin","15")]},
+ {h:"Strength (35 min) · rest 45–60s",x:[e("dbrow",["3×12/arm","4×15/arm · 2s squeeze","4×20/arm · 2s squeeze"]),e("bpd",["3×15","4×15","4×20"]),e("brow",["3×15","4×15","4×20 · 2s hold"]),e("fpull",["3×20","3×20","4×20"]),e("rfly",["3×15","4×15","4×20"]),e("ytw",["2×8 each","3×10 each","3×12 each"]),e("curl",["3×12","4×12 · 3s down","4 × 21s"]),e("hamc",["3×12","3×15","3×15"])]},
+ {h:"Core",x:[e("bdog",["3×10/side","3×12/side","3×15/side"]),e("splank",["3×20s/side","3×30s/side","3×45s/side"]),e("superman",["3×10","3×12","3×15"])]},
+ {h:"Cool-down",x:[e("wangel","2×10"),e("thor","1–2 min"),e("pecst","45s/side")]}]},
+{t:"HIIT Fat-Burn + Abs",f:"Conditioning · Stamina · Abs",m:55,b:[
+ {h:"Warm-up (7 min)",x:[e("jj","2 min"),e("bwsq","15"),e("inch","5"),e("mc","20")]},
+ {h:"Circuit — P1: 4 rounds 30s/30s · P2: 5 rounds 40s/20s · P3: 6 rounds 45s/15s · 1 min rest between rounds",x:[e("slam",["30s","40s","45s"]),e("kbsw",["30s","40s","45s"]),e("thr",["30s","40s","45s"]),e("mc",["30s","40s","45s"]),e("burp",["30s","40s","45s"]),e("skater",["30s","40s","45s"])]},
+ {h:"Abs (12 min)",x:[e("abr",["3×6","4×8","4×12"]),e("hollow",["3×20s","3×30s","3×40s"]),e("bicy",["3×20","3×30","4×30"]),e("ptap",["3×16","3×20","3×30"])]},
+ {h:"Cool-down",x:[e("walk","10 min slow"),e("bhuj","3×20s"),e("child","1 min")]}]},
+{t:"Full-Body Strength",f:"Athletic power · Total body",m:60,b:[
+ {h:"Warm-up (8 min)",x:[e("halo","8/direction"),e("wgs","5/side"),e("inch","5"),e("glbr","15")]},
+ {h:"Strength (35 min) · rest 45–60s",x:[e("kbcp",["3×8/side","4×10/side","4×12/side"]),e("thr",["3×12","4×12","4×15"]),e("renrow",["3×8/side","4×10/side","4×12/side"]),e("kbgl",["3×10/leg","4×10/leg","4×12/leg"]),e("sumo",["3×15","4×15","4×20"]),e("tgu",["2×3/side","3×3/side","3×5/side"]),e("farmer",["3×45s","3×60s","4×60s"])]},
+ {h:"Core",x:[e("abr",["3×6","4×8","4×12"]),e("vup",["3×10","3×12","4×15"]),e("revcr",["3×12","3×15","4×15"])]},
+ {h:"Cool-down",x:[e("hipflex","45s/side"),e("pecst","45s/side"),e("hamst","45s/side")]}]},
+SAT];
+
+/* ================= GYM PLAN ================= */
+const GYM=[SUN,
+{t:"Push",f:"Chest · Shoulders · Triceps",m:65,b:[
+ {h:"Warm-up",x:[e("bike","5 min"),e("armc","1 min"),e("scappu","12"),e("pullap","20")]},
+ {h:"Strength · rest 90s compounds / 60s others",x:[e("bench",C),e("incdb",C),e("sdbsp",C),e("clat",I),e("cfly",I),e("rope",I),e("cohe",I)]},
+ {h:"Core + Cardio",x:[e("hkr",K),e("ccrunch",K),e("iwalk",["15 min · 10% · 5 km/h","20 min · 12% · 5 km/h","20 min · 12–15% · 5.5 km/h"])]}]},
+{t:"Pull",f:"Back width · Thickness · Biceps",m:65,b:[
+ {h:"Warm-up",x:[e("bike","5 min"),e("pullap","20"),e("thread","6/side")]},
+ {h:"Strength",x:[e("apu",["3×max (assisted)","4×6–10","4×8–12 (add weight if >12)"]),e("lpd",C),e("cbrow",C),e("csrow",C),e("cfp",I),e("rdfly",I),e("bbcurl",I),e("hamc",I)]},
+ {h:"Core + Cardio",x:[e("bext",K),e("plank",["3×45s","3×60s","3×75s"]),e("iwalk",["15 min","20 min","20 min"])]}]},
+{t:"Legs",f:"Quads · Hamstrings · Glutes · Calves",m:65,b:[
+ {h:"Warm-up",x:[e("bike","5 min"),e("legsw","10/side"),e("bwsq","15"),e("glbr","15")]},
+ {h:"Strength",x:[e("sq",C),e("rdl",C),e("wlunge",["3×10/leg","3×12/leg","4×12/leg"]),e("lp",I),e("lcurl",I),e("lext",I),e("hthrust",C),e("scalf",I)]},
+ {h:"Core",x:[e("abr",["3×8","4×10","4×12"]),e("lraise",K)]}]},
+{t:"Upper (Posture + Aesthetics)",f:"Upper chest · Shoulders · Back · Arms",m:65,b:[
+ {h:"Warm-up",x:[e("bike","5 min"),e("pullap","20"),e("wangel","10")]},
+ {h:"Strength",x:[e("incb",C),e("lpd",C),e("arnold",C),e("sacr",C),e("clat",I),e("bbcurl",["3×12 (superset with rope)","3×12 superset","4×12 superset + drop"]),e("rope",["3×12 superset","3×12 superset","4×12 superset + drop"]),e("cfp",I)]},
+ {h:"Cardio",x:[e("stair",["15 min steady","20 min steady","20 min: 1 fast/1 slow"])]}]},
+{t:"Lower + Conditioning",f:"Power · Fat burn · Stamina",m:65,b:[
+ {h:"Warm-up",x:[e("bike","5 min"),e("wgs","5/side"),e("glbr","15")]},
+ {h:"Strength",x:[e("tbdl",C),e("bss",["3×10/leg","3×10/leg heavier","4×8–10/leg"]),e("lp",["3×15 · feet high","4×12 · feet high","4×12 + drop set"]),e("lcurl",I),e("kbsw",["3×15","4×20","5×20"])]},
+ {h:"Core + Finisher",x:[e("pallof",["3×10/side","3×12/side","4×12/side"]),e("carry",["3×40 m","4×40 m","4×50 m heavy"]),e("bike",["8 × 20s hard/40s easy","10 × 20s/40s","12 × 20s/40s"])]}]},
+SAT];
+
+/* ================= DIET (index 0=Sun … 6=Sat) ================= */
+const WAKE=["6:30","Wake-up drink","1 glass warm water + soaked methi seeds (1 tsp, soaked overnight) OR jeera-ajwain-saunf water. Then 5 soaked almonds + 2 walnuts + 1 tsp roasted flax/pumpkin seeds."];
+const PRE=["7:00","Workout","Best time: before work (7–8 am). Fasted is fine; if weak, ½ banana or black coffee 20 min before."];
+const POST=["8:15","Post-workout","1 scoop whey in water (24g protein) OR 150g hung curd + 1 fruit OR 4 egg whites + 1 fruit."];
+const MID=["11:00","Mid-morning","1 fruit (guava / papaya / apple / orange / pomegranate) + green tea. 1 amla or 20 ml amla juice."];
+const NIGHT=["10:00","Before bed","Haldi doodh: 150 ml toned milk + ½ tsp haldi + pinch kali mirch (no sugar). Optional: 1 tsp Triphala in warm water (digestion). Sleep by 10:45."];
+const D=[
+ {n:"Sunday",k:"~1900 kcal · ~125g protein",m:[["8:30","Breakfast","Oats-vegetable upma (40g oats) + 3-egg omelette (1 yolk + 2 whites + 2 whole) with onion/tomato/spinach."],["1:30","Lunch (flex meal P1–P2)","Your controlled 'cheat' — home-style: 2 roti + paneer sabzi + dal + salad, OR one small treat (1 slice pizza / 1 piece mithai). P3: normal lunch."],["4:30","Snack","Fruit + 1 cup buttermilk (chaas) with roasted jeera."],["8:00","Dinner","Moong dal khichdi (1 bowl, more dal than rice) + 1 bowl curd + big salad."]]},
+ {n:"Monday",k:"~1950 kcal · ~135g protein",m:[["8:30","Breakfast","3 whole eggs + 2 whites veg omelette + 1 multigrain roti/toast + ½ tsp ghee."],["1:30","Lunch","2 jowar/multigrain roti + 1 katori rajma + 1 katori lauki/tori sabzi + salad + 1 katori raita."],["4:30","Snack","30g roasted chana + 1 glass chaas + green tea."],["8:00","Dinner","Paneer tikka 120g (air-fry/tawa) + sautéed veggies (capsicum, onion, mushroom) + 1 bowl moong dal soup."]]},
+ {n:"Tuesday",k:"~1900 kcal · ~130g protein",m:[["8:30","Breakfast","2 moong dal chillas stuffed with 50g paneer + green chutney + 200g curd."],["1:30","Lunch","1 katori brown rice + 1 katori dal + bhindi/beans sabzi + salad + curd."],["4:30","Snack","1 bowl sprouts chaat (moong + chana, onion, tomato, lemon, chaat masala)."],["8:00","Dinner","Tofu bhurji 150g + 1 roti + cucumber-tomato salad."]]},
+ {n:"Wednesday",k:"~1900 kcal · ~135g protein",m:[["8:30","Breakfast","200g hung curd / Greek yogurt + 30g oats + 1 apple/berries + 1 tsp chia + 2 boiled eggs."],["1:30","Lunch","2 multigrain roti + 1 katori chole + palak/methi sabzi + salad."],["4:30","Snack","30g roasted makhana + green tea."],["8:00","Dinner","Egg curry (2 whole + 3 whites, less oil) + big bowl sautéed veggies (or 1 roti)."]]},
+ {n:"Thursday",k:"~1900 kcal · ~130g protein",m:[["8:30","Breakfast","2 besan chillas with veggies + 1 katori curd + 3 boiled egg whites."],["1:30","Lunch","Veg dalia/quinoa pulao (1 bowl) + 40g soya chunks curry + raita + salad."],["4:30","Snack","1 fruit + 8 almonds."],["8:00","Dinner","Palak paneer (100g paneer, less cream/oil) + 1 roti + salad."]]},
+ {n:"Friday",k:"~1950 kcal · ~135g protein",m:[["8:30","Breakfast","Egg bhurji (3 eggs) with onion-tomato-capsicum + 1 roti."],["1:30","Lunch","2 bajra/jowar roti + 1 katori moong/masoor dal + mixed veg + salad + curd."],["4:30","Snack","Soya chunks chaat (30g dry, boiled, with onion, lemon, masala)."],["8:00","Dinner","Grilled paneer/tofu salad bowl (120g) with veggies, lemon, olive oil 1 tsp + clear veg soup."]]},
+ {n:"Saturday",k:"~1950 kcal · ~125g protein",m:[["8:30","Breakfast","Poha with veggies + 15g peanuts + 2 boiled eggs (or 1 bowl sprouts)."],["1:30","Lunch","1 katori rajma/chole + 1 katori rice + salad + curd."],["4:30","Snack","Buttermilk + 25g roasted chana."],["8:00","Dinner","2 moong dal chillas with paneer stuffing (60g) + mint chutney + salad."]]},
+];
+
+/* ================= STATE ================= */
+const DAYS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const PH=[{n:"Phase 1 · Foundation",d:"Weeks 1–4: learn form, build habits, wake up muscles, fix posture basics."},{n:"Phase 2 · Build",d:"Weeks 5–8: more sets, slower tempo, heavier work, more steps. Body shape visibly changes."},{n:"Phase 3 · Shred",d:"Weeks 9–12: max intensity, density, tighter diet. Abs outline & cuts appear."}];
+const STEPS=["8,000","10,000","12,000"];
+let S=JSON.parse(localStorage.getItem("tx")||"null")||{start:ymd(new Date()),mode:"home",done:{},logs:[]};
+function save(){localStorage.setItem("tx",JSON.stringify(S))}
+function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function pd(s){const[a,b,c]=s.split("-").map(Number);return new Date(a,b-1,c)}
+function dayNum(dt){return Math.floor((pd(ymd(dt))-pd(S.start))/864e5)+1}
+function phaseOf(n){return n<=28?0:n<=56?1:2}
+function getk(d,k){return !!(S.done[d]&&S.done[d][k])}
+function setk(d,k,v){(S.done[d]=S.done[d]||{})[k]=v;save()}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const yt=n=>"https://www.youtube.com/results?search_query="+encodeURIComponent(n+" proper form");
+
+/* ================= RENDER: SESSION ================= */
+function session(s,ph,date){
+ let h=`<div class="row"><span class="pill a">${s.m} min</span><span class="mut sm">${s.f}</span></div>`;
+ s.b.forEach((b,bi)=>{
+  h+=`<div class="blk"><div class="bh">${esc(b.h)}</div><ul class="ex">`;
+  b.x.forEach((it,ii)=>{
+   const ex=EX[it.e];const nm=it.n||(ex?ex[0]:it.e);const rx=Array.isArray(it.p)?it.p[ph]:it.p;const k=`w${bi}-${ii}`;
+   h+=`<li><div class="exr">${date?`<label><input type="checkbox" data-d="${date}" data-k="${k}" ${getk(date,k)?"checked":""}><span class="nm">${esc(nm)}</span></label>`:`<span class="nm">${esc(nm)}</span>`}<span class="rx">${esc(rx)}</span>${ex?`<button class="ib" data-cue>i</button>`:""}</div>${ex?`<div class="cue">${esc(ex[1])}<br><a href="${yt(ex[0])}" target="_blank" rel="noopener">▶ Watch demo</a></div>`:""}</li>`;
+  });
+  h+=`</ul></div>`;
+ });
+ return h;
+}
+function meals(di,ph){
+ const d=D[di];
+ const order=[WAKE,PRE,POST,d.m[0],MID,d.m[1],d.m[2],d.m[3],NIGHT];
+ let h=`<div class="mut sm" style="margin-bottom:6px">${d.k}${ph===2?" · <b style='color:var(--acc)'>P3: skip roti/rice at dinner, max 1 roti at lunch</b>":""}</div>`;
+ order.forEach(m=>{h+=`<div class="meal"><div class="t">${m[0]}</div><div><b>${esc(m[1])}</b><span class="d">${esc(m[2])}</span></div></div>`});
+ return h;
+}
+
+/* ================= HABITS ================= */
+function habits(ph){return [
+ ["water","💧 Water 3.5 L (+ 2 cups green tea)"],["steps",`🚶 ${STEPS[ph]} steps (walking pad in meetings)`],["prot","🥚 Protein 120–140 g hit"],["post","🧍 Posture routine 10 min + breaks every 45 min"],
+ ["am","☀️ AM skin: cleanse · vit-C/niacinamide · moisturiser · SPF 50"],["pm","🌙 PM skin: cleanse · serum/retinol · moisturiser"],["clean","🚫 No sugar · maida · fried · packaged · alcohol"],
+ ["amla","🌿 Amla + morning drink + curry leaves"],["phone","📵 No screens 30 min before bed"],["sleep","😴 Sleep 7–8 h (in bed by 10:45)"]]}
+
+/* ================= TODAY ================= */
+function renderToday(){
+ const now=new Date(),t=ymd(now),n=dayNum(now),ph=phaseOf(Math.max(1,Math.min(84,n))),dow=now.getDay();
+ const plan=(S.mode==="gym"?GYM:HOME)[dow];
+ let head;
+ if(n<1)head=`Starts in ${1-n} day(s) — preview of ${PH[0].n}`;else if(n>84)head=`🏆 Program complete! Day ${n} · keep going with Phase 3`;else head=`Day ${n} / 84 · Week ${Math.ceil(n/7)} · ${PH[ph].n}`;
+ document.getElementById("hsub").textContent=head;
+ const hb=habits(ph);const hd=hb.filter(x=>getk(t,"h-"+x[0])).length;
+ let h=`<div class="card"><div class="seg"><button data-mode="home" class="${S.mode==="home"?"on":""}">🏠 Home</button><button data-mode="gym" class="${S.mode==="gym"?"on":""}">🏋️ Gym</button></div>
+ <h2>${DAYS[dow]}: ${plan.t}</h2>${session(plan,ph,t)}
+ <button class="big ${getk(t,"W")?"done":""}" data-wd="${t}">${getk(t,"W")?"✅ Workout done — great job!":"Mark workout complete"}</button></div>`;
+ h+=`<div class="card"><h2>Daily habits <span class="mut sm">${hd}/${hb.length}</span></h2><div class="bar"><i style="width:${hd/hb.length*100}%"></i></div><ul class="ex" style="margin-top:6px">`;
+ hb.forEach(x=>{h+=`<li><div class="exr"><label><input type="checkbox" data-d="${t}" data-k="h-${x[0]}" ${getk(t,"h-"+x[0])?"checked":""}><span class="nm">${x[1]}</span></label></div></li>`});
+ h+=`</ul></div><div class="card"><h2>Today's meals</h2>${meals(dow,ph)}</div>`;
+ h+=`<div class="card"><h2>${PH[ph].n}</h2><p class="mut sm" style="margin:0">${PH[ph].d}</p></div>`;
+ document.getElementById("v-today").innerHTML=h;
+}
+
+/* ================= TRAIN ================= */
+let tr={mode:null,dow:null,ph:null};
+function renderTrain(){
+ const n=dayNum(new Date());
+ if(tr.mode===null)tr.mode=S.mode;if(tr.dow===null)tr.dow=new Date().getDay();if(tr.ph===null)tr.ph=phaseOf(Math.max(1,Math.min(84,n)));
+ const plan=(tr.mode==="gym"?GYM:HOME);
+ let h=`<div class="card"><div class="seg"><button data-tm="home" class="${tr.mode==="home"?"on":""}">🏠 Home</button><button data-tm="gym" class="${tr.mode==="gym"?"on":""}">🏋️ Gym</button></div>
+ <div class="seg">${[0,1,2].map(i=>`<button data-tp="${i}" class="${tr.ph===i?"on":""}">P${i+1}</button>`).join("")}</div>
+ <div class="chips">${[1,2,3,4,5,6,0].map(i=>`<button data-td="${i}" class="${tr.dow===i?"on":""}">${DAYS[i]}</button>`).join("")}</div>
+ <h2>${DAYS[tr.dow]}: ${plan[tr.dow].t}</h2>${session(plan[tr.dow],tr.ph,null)}</div>`;
+ h+=`<div class="card"><h2>Weekly split</h2><table><tr><th>Day</th><th>Home</th><th>Gym</th></tr>${[1,2,3,4,5,6,0].map(i=>`<tr><td>${DAYS[i]}</td><td>${HOME[i].t}</td><td>${GYM[i].t}</td></tr>`).join("")}</table></div>`;
+ h+=`<div class="card"><h2>Training rules</h2><ul class="b sm">
+ <li><b>Progressive overload</b> is everything. With 8 kg weights you progress by: more reps → slower tempo (3s down) → pauses → 1½ reps → less rest → unilateral (one arm/leg). Write numbers down.</li>
+ <li>Last 2 reps of every set should be <b>hard</b> but with good form. If it's easy, it doesn't change your body.</li>
+ <li>Plan to buy <b>adjustable dumbbells (2–24 kg) or a 12–16 kg kettlebell around week 5</b> — your legs and back will outgrow 8 kg.</li>
+ <li>A <b>doorway pull-up bar</b> (₹800–1500) is the single best home upgrade for a V-shaped back.</li>
+ <li>Rest 45–60s at home, 60–90s in gym. Breathe out on the effort.</li>
+ <li>Pain in a joint (not muscle burn) = stop that exercise, swap it.</li>
+ <li>Week 4 and week 8: do the same workouts with ~30% fewer sets if you feel beaten up (deload).</li>
+ <li>Gym days: Saturday yoga/walk can be done at home. If gym is new to you, book 2–3 sessions with a trainer to learn squat, deadlift and bench form.</li></ul></div>`;
+ document.getElementById("v-train").innerHTML=h;
+}
+
+/* ================= DIET ================= */
+let dd=null;
+function renderDiet(){
+ const ph=phaseOf(Math.max(1,Math.min(84,dayNum(new Date()))));if(dd===null)dd=new Date().getDay();
+ let h=`<div class="card"><h2>Your numbers</h2><table>
+ <tr><td>Maintenance (est.)</td><td><b>~2,500 kcal</b></td></tr>
+ <tr><td>Target</td><td><b>P1 1,950 · P2 1,900 · P3 1,800 kcal</b></td></tr>
+ <tr><td>Protein</td><td><b>120–140 g/day</b> (main driver of muscle + fat loss)</td></tr>
+ <tr><td>Fat</td><td>50–60 g (ghee/oil max 3 tsp/day total)</td></tr>
+ <tr><td>Fibre</td><td>30 g+ (veggies at every meal)</td></tr>
+ <tr><td>Water</td><td>3.5 L</td></tr>
+ <tr><td>Expected loss</td><td>0.5–0.9 kg/week</td></tr></table>
+ <div class="okn">Plate rule (lunch & dinner): ½ plate sabzi/salad · ¼ protein (paneer/dal/egg/tofu/soya) · ¼ roti/rice.</div></div>`;
+ h+=`<div class="card"><div class="chips">${[1,2,3,4,5,6,0].map(i=>`<button data-dd="${i}" class="${dd===i?"on":""}">${DAYS[i]}</button>`).join("")}</div><h2>${D[dd].n}</h2>${meals(dd,ph)}
+ <div class="note">Evening workout? Move the post-workout shake to after the session (~7:30 pm) and have the 4:30 snack as pre-workout.</div></div>`;
+ h+=`<div class="card"><h2>Protein cheat sheet</h2><table><tr><th>Food</th><th>Protein</th></tr>
+ <tr><td>1 whole egg / 1 egg white</td><td>6 g / 3.5 g</td></tr><tr><td>Paneer 100 g (prefer low-fat)</td><td>18–20 g</td></tr><tr><td>Tofu 100 g</td><td>12–15 g</td></tr>
+ <tr><td>Soya chunks 30 g dry</td><td>15 g</td></tr><tr><td>Hung curd / Greek yogurt 200 g</td><td>18–20 g</td></tr><tr><td>Whey 1 scoop</td><td>24 g</td></tr>
+ <tr><td>Dal 1 katori cooked</td><td>7–9 g</td></tr><tr><td>Rajma/chole 1 katori</td><td>8–10 g</td></tr><tr><td>Sprouts 1 bowl</td><td>10–12 g</td></tr>
+ <tr><td>Roasted chana 30 g</td><td>6 g</td></tr><tr><td>Milk 250 ml</td><td>8 g</td></tr><tr><td>Besan chilla (1)</td><td>6 g</td></tr></table></div>`;
+ h+=`<div class="card"><h2>Rules</h2><ul class="b sm">
+ <li><b>Stop:</b> sugar in tea, biscuits, namkeen, bhujia, maida (bread, naan, pizza base), fried (samosa, pakora, puri), cold drinks, packaged juice, alcohol.</li>
+ <li>Tea/coffee: max 2/day, no sugar (use stevia if needed).</li>
+ <li>Dinner by 8 pm, 2–3 h before bed. Walk 10 min after lunch & dinner (walking pad!).</li>
+ <li>Cook in mustard oil / ghee, measured with a teaspoon. Air-fryer is your friend.</li>
+ <li>Outside food: choose tandoori paneer/soya tikka, dal, salad, roti (not naan). Skip gravies with cream.</li>
+ <li>Sundays P1–P2: 1 controlled flex meal. P3: none.</li>
+ <li>Weigh food for the first 2 weeks (₹300 kitchen scale) — you'll learn portions for life.</li></ul></div>`;
+ h+=`<div class="card"><h2>Supplements <span class="mut sm">(ask your doctor first)</span></h2><ul class="b sm">
+ <li><b>Whey protein</b> (isolate if lactose-sensitive) — 1 scoop/day. Makes vegetarian protein targets easy. Buy a lab-tested brand.</li>
+ <li><b>Creatine monohydrate</b> 3–5 g daily, any time. Most-researched supplement: strength, muscle fullness.</li>
+ <li><b>Vitamin D3</b> & <b>B12</b> — most Indian vegetarians are deficient; both affect energy, mood, hair and greying. Dose per blood test.</li>
+ <li><b>Omega-3</b> (fish oil or algae oil) — skin, joints, heart.</li>
+ <li><b>Magnesium glycinate</b> at night — sleep quality.</li>
+ <li>Optional Ayurveda: <b>Ashwagandha</b> (KSM-66) 300–600 mg — stress, sleep; avoid with thyroid conditions unless your doctor approves.</li></ul></div>`;
+ h+=`<div class="card"><h2>Weekly grocery list</h2><p class="sm">Eggs 30 · paneer (low-fat) 700 g · tofu 400 g · soya chunks 250 g · curd 3–4 kg (make hung curd) · toned milk 1.5 L · moong/masoor/arhar dal · rajma · kabuli/kala chana · moong for sprouts · oats · dalia/quinoa · brown rice · jowar/bajra/multigrain atta · besan · makhana · roasted chana · almonds · walnuts · flax/pumpkin/chia seeds · amla · seasonal fruits (guava, papaya, apple, orange, pomegranate) · spinach, methi, lauki, tori, bhindi, beans, capsicum, broccoli, mushroom, cucumber, tomato, onion, carrot, beetroot · curry leaves · ginger · garlic · lemon · green tea · haldi · jeera · ajwain · saunf · methi seeds · cinnamon.</p></div>`;
+ document.getElementById("v-diet").innerHTML=h;
+}
+
+/* ================= POSTURE ================= */
+function renderPosture(){
+ const P={t:"Daily Posture Fix (10–12 min)",f:"Rounded shoulders · Forward head · Tight hips · Weak glutes",m:12,b:[
+  {h:"Release",x:[e("thor","2 min (3 spots)"),e("pecst","45s/side"),e("hipflex","45s/side")]},
+  {h:"Activate",x:[e("chin","2×10 · 3s hold"),e("wangel","2×10"),e("pullap","2×20"),e("ytw","1×8 each"),e("glbr","2×15"),e("dbug","2×8/side")]},
+  {h:"Lock it in",x:[e("wallchk","60s")]}]};
+ const t=ymd(new Date());
+ let h=`<div class="card"><h2>${P.t}</h2>${session(P,0,null)}<div class="okn">Do this every day — morning or after work. Tick "Posture routine" in Today's habits.</div></div>`;
+ h+=`<div class="card"><h2>Work-from-home setup (most important)</h2><ul class="b sm">
+ <li><b>Screen top at eye level</b>, arm's length away. Laptop? Use a stand + external keyboard & mouse (₹1,500 total). This alone fixes half your neck problem.</li>
+ <li>Chair: feet flat, knees ~90°, lower back supported (rolled towel), elbows at 90° by your sides.</li>
+ <li><b>Phone at eye level</b> — lift the phone, don't drop the head. Every inch forward adds ~4–5 kg load on the neck.</li>
+ <li><b>45/5 rule:</b> every 45 min stand 5 min: 10 chin tucks, 10 shoulder-blade squeezes, 10 bodyweight squats, door chest stretch.</li>
+ <li>Take calls standing or on the walking pad (2.5–3.5 km/h). Aim 4,000–6,000 steps during work hours.</li>
+ <li>Set an hourly reminder on iPhone (Clock → Alarm, or Reminders "every hour 10–6").</li></ul></div>`;
+ h+=`<div class="card"><h2>Sleep posture</h2><ul class="b sm"><li>Sleep on back or side; avoid stomach sleeping (twists the neck).</li><li>Pillow height so the neck stays level with the spine. Side sleepers: pillow between knees.</li></ul></div>
+ <div class="card"><h2>Standing cues (all day)</h2><p class="sm">"Tall crown, chin back, ribs down, shoulders back & down (not forced), glutes lightly on, weight mid-foot." Check yourself in every mirror you pass.</p>
+ <p class="sm mut">Result timeline: you'll feel straighter in 2 weeks; visible change in photos by week 6–8, if you also fix the desk setup.</p></div>`;
+ document.getElementById("v-posture").innerHTML=h;
+}
+
+/* ================= GLOW: SKIN / HAIR / AYURVEDA ================= */
+function renderGlow(){
+ document.getElementById("v-glow").innerHTML=`
+ <div class="card"><h2>Face glow — daily routine</h2>
+ <h3>☀️ Morning (3 min)</h3><ol class="sm"><li>Gentle face wash (e.g. Cetaphil / Simple / Minimalist).</li><li><b>Vitamin C serum</b> (10–15%) or <b>Niacinamide 10%</b> — dullness, dark spots, oil control.</li><li>Light gel moisturiser.</li><li><b>Sunscreen SPF 50 PA+++</b> — EVERY day, even WFH (window UV). #1 anti-ageing step. Reapply if you go out.</li></ol>
+ <h3>🌙 Night (3 min)</h3><ol class="sm"><li>Wash face (twice if you wore sunscreen outside).</li><li>Weeks 1–2: niacinamide. <b>From week 3: Retinol 0.25–0.3%</b> (pea-size) 2 nights/week → 3 → every other night. Reduces fine lines, pores, dullness. Never with vit-C/AHA same night.</li><li>Moisturiser (ceramide-based). Lip balm.</li></ol>
+ <h3>🗓️ Weekly</h3><ul class="b sm"><li>1× <b>salicylic acid (BHA)</b> face wash/exfoliant — clears pores, pollution grime.</li><li>1× <b>ubtan</b>: 2 tsp besan + pinch haldi + 1 tsp curd + few drops honey/rose water. 10 min, wash off. Brightens.</li><li>Fresh aloe vera gel at night on non-retinol nights — soothing.</li></ul>
+ <div class="note">Patch-test new products on the jaw for 2 days. Persistent pigmentation, acne or dark circles → dermatologist.</div></div>
+
+ <div class="card"><h2>Glow from inside</h2><ul class="b sm"><li><b>Sleep 7–8 h</b> — dull skin & dark circles are mostly sleep + screen time.</li><li><b>3.5 L water</b>, 5 colours of veggies/fruit daily (beetroot, carrot, spinach, tomato, papaya).</li><li>Cut sugar → less glycation (sugar ages skin) and less inflammation.</li><li>Amla, guava, orange = vitamin C for collagen. Walnuts, flax = omega-3.</li><li>Sweat 6 days/week → better circulation and that 'athlete' flush.</li></ul></div>
+
+ <div class="card"><h2>Hair (thinning) & beard (white)</h2>
+ <details open><summary>Honest truth first</summary><p>Grey/white hair is mostly <b>genetic</b>; it usually can't be reversed. But deficiencies (B12, vitamin D, iron/ferritin, copper, thyroid) and stress can speed it up — fixing them can slow it, and occasionally a few hairs re-pigment. Thinning hair in men is usually androgenic and <b>progressive</b> — start early to keep what you have.</p></details>
+ <details><summary>Medical options (most effective)</summary><ul class="b"><li>See a <b>dermatologist</b> about <b>Minoxidil 5%</b> and/or oral options — these are the evidence-based treatments for thinning.</li><li><b>Ketoconazole 2% shampoo</b> 2×/week if dandruff/itchy scalp.</li><li>Get blood tests (see Track tab) — correct B12, D3, ferritin, thyroid.</li></ul></details>
+ <details><summary>Ayurveda / home care</summary><ul class="b"><li>Oil massage 2×/week, 1 h before wash: coconut oil heated with <b>curry leaves + methi seeds</b>, or <b>bhringraj / amla oil</b>. 5 min scalp massage boosts circulation.</li><li>Daily: 1 amla (or 20 ml juice) + 8–10 curry leaves (chew or in food).</li><li>Shampoo with lukewarm (not hot) water. Avoid tight caps and harsh styling.</li><li>Protein 120 g+/day — hair is made of protein.</li></ul></details>
+ <details><summary>Beard styling for a younger look</summary><ul class="b"><li><b>Option A — own it:</b> a short, sharply shaped salt-and-pepper beard (3–6 mm, clean cheek & neck line) looks premium and mature-fit. Get it shaped by a good barber every 2–3 weeks.</li><li><b>Option B — colour:</b> ammonia-free beard colour, or natural henna + indigo (2-step) for darker tone. Patch test first.</li><li>Beard oil daily, trim weekly. A visible jawline (from fat loss) makes the biggest age difference.</li></ul></details></div>
+
+ <div class="card"><h2>Ayurveda daily ritual (Dinacharya)</h2><table>
+ <tr><td><b>Wake</b></td><td>Tongue scraping, oil pulling 5 min (1 tbsp coconut/sesame oil), warm water.</td></tr>
+ <tr><td><b>Morning drink</b></td><td>Alternate: soaked methi water (blood sugar) · jeera-ajwain-saunf water (bloating) · cinnamon + lemon warm water.</td></tr>
+ <tr><td><b>Daily</b></td><td>Amla, curry leaves, haldi + kali mirch in food, ginger.</td></tr>
+ <tr><td><b>After meals</b></td><td>½ tsp saunf + 10 min walk.</td></tr>
+ <tr><td><b>Night</b></td><td>Haldi doodh (no sugar). Optional Triphala 1 tsp in warm water (digestion).</td></tr>
+ <tr><td><b>Weekly</b></td><td>Abhyanga: full body warm sesame-oil massage before Sunday bath.</td></tr></table>
+ <div class="note">Ayurveda helps digestion, stress and sleep — but fat loss & muscle come from calories, protein, training and sleep. Avoid "fat-burner" churans and "hair regrowth" miracle products.</div></div>`;
+}
+
+/* ================= TRACK / PLAN ================= */
+function renderPlan(){
+ const now=new Date(),n=dayNum(now),t=ymd(now);
+ let cal="";for(let i=1;i<=84;i++){const d=new Date(pd(S.start));d.setDate(d.getDate()+i-1);const k=ymd(d);const dn=getk(k,"W");const past=i<n;const isRest=d.getDay()===0;cal+=`<div class="${dn?"d1":(past&&!isRest?"ms":"")} ${i===n?"td":""}" title="${k}">${i}</div>`}
+ const doneCount=Object.keys(S.done).filter(k=>S.done[k].W).length;
+ let streak=0;{const d=new Date();if(!getk(ymd(d),"W"))d.setDate(d.getDate()-1);while(pd(ymd(d))>=pd(S.start)){if(getk(ymd(d),"W"))streak++;else if(d.getDay()!==0)break;d.setDate(d.getDate()-1)}}
+ const L=[...S.logs].sort((a,b)=>a.d<b.d?-1:1);const f=L[0],l=L[L.length-1];
+ let h=`<div class="card"><h2>Program</h2><label class="sm mut">Start date (Day 1)</label><input type="date" id="startD" value="${S.start}">
+ <div class="row" style="margin-top:10px"><span class="pill a">Workouts done: ${doneCount}</span><span class="pill">🔥 Streak: ${streak}</span><span class="pill">Day ${Math.max(0,Math.min(84,n))}/84</span></div>
+ <div class="bar"><i style="width:${Math.max(0,Math.min(100,n/84*100))}%"></i></div>
+ <h3>12-week calendar</h3><div class="cal">${cal}</div><p class="sm mut">Green = workout done · red = missed · orange ring = today.</p></div>`;
+ h+=`<div class="card"><h2>Log measurements</h2><div class="grid2"><div><label class="sm mut">Date</label><input type="date" id="lgD" value="${t}"></div><div><label class="sm mut">Weight (kg)</label><input type="number" step="0.1" id="lgW" inputmode="decimal"></div><div><label class="sm mut">Waist at navel (cm)</label><input type="number" step="0.5" id="lgWa" inputmode="decimal"></div><div><label class="sm mut">Chest / Arm (cm)</label><input type="text" id="lgC" placeholder="e.g. 100 / 33"></div></div>
+ <label class="sm mut">Notes (energy, sleep, strength PRs)</label><textarea id="lgN" rows="2"></textarea><button class="big" id="lgSave">Save entry</button>
+ ${L.length>1?`<div class="okn">Since ${f.d}: weight ${(l.w-f.w>0?"+":"")+(l.w-f.w).toFixed(1)} kg${f.wa&&l.wa?` · waist ${(l.wa-f.wa>0?"+":"")+(l.wa-f.wa).toFixed(1)} cm`:""}</div>`:""}
+ <table style="margin-top:8px"><tr><th>Date</th><th>Kg</th><th>Waist</th><th>Chest/Arm</th><th></th></tr>${L.slice().reverse().map(x=>`<tr><td>${x.d}</td><td>${x.w||""}</td><td>${x.wa||""}</td><td>${esc(x.c||"")}</td><td><button class="ib" data-del="${x.d}">×</button></td></tr>${x.n?`<tr><td colspan="5" class="mut sm">${esc(x.n)}</td></tr>`:""}`).join("")}</table></div>`;
+ h+=`<div class="card"><h2>Realistic 12-week expectations</h2><ul class="b sm">
+ <li><b>Weight:</b> 86 → ~77–80 kg (fat loss 7–10 kg while adding some muscle).</li>
+ <li><b>Waist:</b> −8 to −12 cm. Belly, back fat and thighs shrink noticeably; clothes fit very differently.</li>
+ <li><b>Abs:</b> a full, sharp six-pack needs ~10–12% body fat. You're likely ~28–30% now. In 12 weeks expect a flatter stomach and an <b>upper-ab outline</b> in good light. Full six-pack, veins and deep cuts = continue this plan for another 3–6 months. That's normal — even celebrity transformations take 6–12 months.</li>
+ <li><b>Posture:</b> visibly taller & more open chest by week 6–8.</li>
+ <li><b>Stamina:</b> HIIT rounds & walks will feel easy by week 6.</li>
+ <li><b>Face:</b> fat loss + sleep + SPF/retinol = sharper jawline, less puffiness, clearer skin in 6–8 weeks. You won't reverse your age — but you will look 5+ years younger than you do today.</li></ul></div>`;
+ h+=`<div class="card"><h2>Before you start (Week 0)</h2><ul class="b sm">
+ <li><b>Blood tests</b> (one package at Thyrocare / Lal PathLabs / Redcliffe ~₹1,500–3,000): CBC, Lipid profile, HbA1c + fasting sugar, Thyroid (TSH, T3, T4), Vitamin D, Vitamin B12, Ferritin/Iron, Liver & Kidney function, Uric acid. Optional: Total testosterone.</li>
+ <li>See a doctor before HIIT if you have BP, heart, knee or back issues.</li>
+ <li>Take 'before' photos (front/side/back) and measurements. Log them here.</li>
+ <li>Buy: kitchen scale, laptop stand, doorway pull-up bar, SPF 50, whey, creatine.</li>
+ <li>Repeat blood tests at week 12 — they'll show the inside transformation.</li></ul></div>`;
+ h+=`<div class="card"><h2>Backup</h2><p class="sm mut">Data lives only on this device/browser. Export weekly.</p><div class="row"><button class="btn" id="exp">⬇ Export</button><label class="btn">⬆ Import<input type="file" id="imp" accept=".json" class="hide"></label><button class="btn" id="rst" style="color:var(--bad)">Reset all</button></div></div>`;
+ document.getElementById("v-plan").innerHTML=h;
+}
+
+/* ================= EVENTS ================= */
+const R={today:renderToday,train:renderTrain,diet:renderDiet,posture:renderPosture,glow:renderGlow,plan:renderPlan};
+let cur="today";
+function show(v){cur=v;document.querySelectorAll("main>section").forEach(s=>s.classList.toggle("hide",s.id!=="v-"+v));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));R[v]();window.scrollTo(0,0)}
+document.getElementById("nav").addEventListener("click",ev=>{const b=ev.target.closest("button");if(b)show(b.dataset.v)});
+document.addEventListener("change",ev=>{const x=ev.target;
+ if(x.dataset.k){setk(x.dataset.d,x.dataset.k,x.checked);if(x.dataset.k.startsWith("h-"))renderToday();return}
+ if(x.id==="startD"&&x.value){S.start=x.value;save();renderPlan();renderToday()}
+ if(x.id==="imp"&&x.files[0]){const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(o.start&&o.done){S=o;save();show(cur);alert("Imported ✔")}}catch(_){alert("Invalid file")}};r.readAsText(x.files[0])}
+});
+document.addEventListener("click",ev=>{const x=ev.target.closest("button");if(!x||x.closest("nav"))return;const ds=x.dataset;
+ if("cue" in ds){x.closest("li").querySelector(".cue").classList.toggle("show")}
+ else if(ds.mode){S.mode=ds.mode;save();renderToday()}
+ else if(ds.wd){setk(ds.wd,"W",!getk(ds.wd,"W"));renderToday()}
+ else if(ds.tm){tr.mode=ds.tm;renderTrain()}else if(ds.tp){tr.ph=+ds.tp;renderTrain()}else if(ds.td){tr.dow=+ds.td;renderTrain()}
+ else if(ds.dd){dd=+ds.dd;renderDiet()}
+ else if(ds.del){if(confirm("Delete entry "+ds.del+"?")){S.logs=S.logs.filter(l=>l.d!==ds.del);save();renderPlan()}}
+ else if(x.id==="lgSave"){const d=document.getElementById("lgD").value,w=parseFloat(document.getElementById("lgW").value),wa=parseFloat(document.getElementById("lgWa").value);if(!d||(!w&&!wa)){alert("Enter weight or waist");return}
+  S.logs=S.logs.filter(l=>l.d!==d);S.logs.push({d,w:w||null,wa:wa||null,c:document.getElementById("lgC").value,n:document.getElementById("lgN").value});save();renderPlan()}
+ else if(x.id==="exp"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:"application/json"}));a.download="transform-backup-"+ymd(new Date())+".json";a.click()}
+ else if(x.id==="rst"){if(confirm("Erase ALL progress, logs and settings?")){localStorage.removeItem("tx");location.reload()}}
+});
+show("today");
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
